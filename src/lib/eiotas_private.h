@@ -30,17 +30,17 @@
 #define MAX_PATH_LENGTH 256
 #define PATH_SEP '/'
 
-#define CHECK_PARENT()                              \
-    if(parent==NULL) {                              \
-        EINA_LOG_ERR("NULL parent not allowed");    \
-        return NULL;                                \
+#define CHECK_PARENT()                      \
+    if(parent==NULL) {                      \
+        ERR("NULL parent not allowed");     \
+        return NULL;                        \
     }
 
-#define BUILD_INSTANCE(_type,_x)                    \
-    _type *_x = (_type*)malloc(sizeof(_type));      \
-    if(_x==NULL) {                                  \
-        EINA_LOG_ERR("malloc error");               \
-        return NULL;                                \
+#define BUILD_INSTANCE(_type,_x)                \
+    _type *_x = (_type*)malloc(sizeof(_type));  \
+    if(_x==NULL) {                              \
+        ERR("malloc error");                    \
+        return NULL;                            \
     }
 
 #ifdef CRITICAL
