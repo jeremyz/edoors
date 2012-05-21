@@ -25,8 +25,8 @@ typedef enum _Eiotas_Type
 {
    EIOTAS_TYPE_SPIN=0,
    EIOTAS_TYPE_ROOM,
-   EIOTAS_TYPE_BOARD,
    EIOTAS_TYPE_DOOR,
+   EIOTAS_TYPE_BOARD,
    EIOTAS_TYPE_COUNT
 } Eiotas_Type;
 

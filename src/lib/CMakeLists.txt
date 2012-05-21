@@ -1,5 +1,7 @@
 LIST(APPEND EIOTAS_CC_SOURCES
    eiotas_main.c
+   eiotas_particle.c
+   eiotas_link.c
    eiotas_iota.c
    eiotas_spin.c
    eiotas_room.c
