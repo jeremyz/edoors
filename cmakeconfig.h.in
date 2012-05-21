@@ -1,0 +1,13 @@
+#define PACKAGE "@CMAKE_PROJECT_NAME@"
+#define PACKAGE_NAME "@PACKAGE@"
+#define VERSION "@EIOTAS_VERSION@"
+#define VMAJ @EIOTAS_VERSION_MAJOR@
+#define VMIN @EIOTAS_VERSION_MINOR@
+#define VMIC @EIOTAS_VERSION_MICRO@
+
+#cmakedefine HAVE___ATTRIBUTE__
+#ifdef HAVE___ATTRIBUTE__
+#define __UNUSED__ __attribute__((unused))
+#else
+#define __UNUSED__
+#endif
