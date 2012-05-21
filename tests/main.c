@@ -45,19 +45,19 @@ int main(int argc, char **argv)
     EINA_LOG_DOM_DBG(_eiotas_log_dom,"Eiotas version %d.%d.%d",eiotas_version->major,eiotas_version->minor,eiotas_version->micro);
 
     Eiotas_Spin *dom0 = eiotas_spin_add("dom0",10);
-    /* eiotas_iota_show((Eiotas_Iota*)dom0); */
+    eiotas_iota_show((Eiotas_Iota*)dom0);
 
-    /* Eiotas_Room *room = &dom0->room; */
-    /* char name[8]; */
-    /* for(i=0; i<5; i++) { */
-    /*     sprintf(name,"room%d",i); */
-    /*     Eiotas_Room *tmp = eiotas_room_add(name,room); */
-    /*     if(tmp!=NULL) { */
-    /*         room = tmp; */
-    /*         eiotas_iota_show((Eiotas_Iota*)room);   // MACROS */
-    /*     } */
-    /* } */
-    /* room = eiotas_room_add("room0",&dom0->room); */
+    Eiotas_Room *room = &dom0->room;
+    char name[8];
+    for(i=0; i<5; i++) {
+        sprintf(name,"room%d",i);
+        Eiotas_Room *tmp = eiotas_room_add(name,room);
+        if(tmp!=NULL) {
+            room = tmp;
+            eiotas_iota_show((Eiotas_Iota*)room);   // MACROS
+        }
+    }
+    room = eiotas_room_add("room0",&dom0->room);
 
     /* Input *input = input_create("hello world"); */
     /* input_show(input); */
@@ -80,7 +80,7 @@ int main(int argc, char **argv)
     /* eiotas_spin_send_particle(din0->iota.spin,p2,EINA_FALSE); */
     /* eiotas_spin_send_particle(din0->iota.spin,p3,EINA_TRUE); */
 
-    /* eiotas_spin_free(dom0); */
+    eiotas_spin_free(dom0);
 
     return eiotas_shutdown();
 }
