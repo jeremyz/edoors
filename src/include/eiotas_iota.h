@@ -42,6 +42,8 @@ struct _Eiotas_Iota {
 
 EAPI void eiotas_iota_show(Eiotas_Iota *iota);
 
+void eiotas_iota_free(Eiotas_Iota *iota);
+
 #define eiotas_iota_require_particle(_iota) eiotas_spin_require_particle((Eiotas_Spin*)(_iota)->spin)
 
 #define eiotas_iota_release_particle(_iota,_particle) eiotas_spin_release_particle((Eiotas_Spin*)(_iota)->spin,_particle)
