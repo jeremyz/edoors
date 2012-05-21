@@ -21,19 +21,48 @@
 #endif
 
 #include "eiotas_spin.h"
+#include "eiotas_iota.h"
 #include "eiotas_private.h"
 
-EAPI Eiotas_Spin*
-eiotas_spin_add(const char* name, unsigned int step)
+EAPI Eiotas_Spin* eiotas_spin_add(const char* name, unsigned int step)
 {
-    // TODO
-    return NULL;
+    BUILD_INSTANCE(Eiotas_Spin,spin);
+
+    if(name==NULL) {
+        ERR("name can't be NULL");
+        return NULL;
+    }
+
+    if(eiotas_iota_init(&spin->room.iota,name,NULL,EIOTAS_TYPE_SPIN)) {
+        return NULL;
+    }
+
+    spin->room.links = NULL;    /* not used */
+    spin->room.children = eina_hash_stringshared_new((Eina_Free_Cb)&eiotas_iota_free);
+    spin->free_particles = eina_array_new(step);
+    spin->sys_fifo = eina_array_new(step);
+    spin->app_fifo = eina_array_new(step);
+
+    return spin;
 }
 
-EAPI void
-eiotas_spin_free(Eiotas_Spin *spin)
+EAPI void eiotas_spin_free(Eiotas_Spin *spin)
 {
+    unsigned int        i;
+    Eiotas_Particle     *particle;
+    Eina_Array_Iterator iterator;
+
     DBG("Spin free 0x%X",spin);
-    // TODO
+
+    eiotas_iota_desinit(&spin->room.iota);
+    eina_hash_free(spin->room.children);
+    EINA_ARRAY_ITER_NEXT(spin->free_particles, i, particle, iterator) eiotas_particle_free(particle);
+    EINA_ARRAY_ITER_NEXT(spin->sys_fifo, i, particle, iterator) eiotas_particle_free(particle);
+    EINA_ARRAY_ITER_NEXT(spin->app_fifo, i, particle, iterator) eiotas_particle_free(particle);
+    eina_array_free(spin->free_particles);
+    eina_array_free(spin->sys_fifo);
+    eina_array_free(spin->app_fifo);
+
+    free(spin);
 }
 
