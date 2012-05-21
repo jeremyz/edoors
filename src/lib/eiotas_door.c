@@ -23,8 +23,7 @@
 #include "eiotas_door.h"
 #include "eiotas_private.h"
 
-EAPI Eiotas_Door*
-eiotas_door_add(const char* name, Eiotas_Room *parent, Eiotas_User_Bits *user_bits)
+EAPI Eiotas_Door* eiotas_door_add(const char* name, Eiotas_Room *parent, Eiotas_User_Bits *user_bits)
 {
     // TODO
     return NULL;

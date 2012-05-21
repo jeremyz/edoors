@@ -23,8 +23,7 @@
 #include "eiotas_board.h"
 #include "eiotas_private.h"
 
-EAPI Eiotas_Board*
-eiotas_board_add(const char* name, Eiotas_Room *parent, Eiotas_User_Bits *user_bits)
+EAPI Eiotas_Board* eiotas_board_add(const char* name, Eiotas_Room *parent, Eiotas_User_Bits *user_bits)
 {
     // TODO
     return NULL;

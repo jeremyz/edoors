@@ -36,7 +36,9 @@ EAPI int eiotas_init()
         fprintf(stderr,"Error during the initialization of Eina_Log module\n");
         return EXIT_FAILURE;
     }
+
     _eiotas_log_dom = eina_log_domain_register("eiotas", EINA_COLOR_CYAN);
+
     return EXIT_SUCCESS;
 }
 
