@@ -23,16 +23,37 @@
 #include "eiotas_room.h"
 #include "eiotas_private.h"
 
-EAPI Eiotas_Room*
-eiotas_room_add(const char* name, Eiotas_Room *parent)
+EAPI Eiotas_Room* eiotas_room_add(const char* name, Eiotas_Room *parent)
 {
-    // TODO
-    return NULL;
+    CHECK_PARENT();
+
+    BUILD_INSTANCE(Eiotas_Room,room);
+
+    if(eiotas_iota_init(&room->iota,name,parent,EIOTAS_TYPE_ROOM)) {
+        return NULL;
+    }
+
+    if(eina_hash_find(parent->children,room->iota.name)) {
+        ERR("Room %s already exists in %s",name,parent->iota.path);
+        eiotas_iota_desinit(&room->iota);
+        return NULL;
+    }
+    eina_hash_direct_add(parent->children,room->iota.name,room);
+
+    room->links = NULL;    // TODO
+    room->children = eina_hash_stringshared_new((Eina_Free_Cb)&eiotas_iota_free);
+
+    return room;
 }
 
 void eiotas_room_free(Eiotas_Room *room)
 {
     DBG("Room free 0x%X",room);
-    // TODO
+
+    eiotas_iota_desinit(&room->iota);
+    // TODO room->links
+    eina_hash_free(room->children);
+
+    free(room);
 }
 
