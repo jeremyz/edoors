@@ -73,3 +73,12 @@ EAPI void eiotas_spin_release_particle(Eiotas_Spin *spin, Eiotas_Particle *parti
     eina_array_push(spin->free_particles,particle);
 }
 
+EAPI void eiotas_spin_send_particle(Eiotas_Spin *spin, Eiotas_Particle *particle, Eina_Bool system)
+{
+    if(system) {
+        eina_array_push(spin->sys_fifo,particle);
+    } else {
+        eina_array_push(spin->app_fifo,particle);
+    }
+}
+
