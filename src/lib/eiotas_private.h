@@ -56,21 +56,21 @@
     }                                                                               \
     eina_hash_direct_add(_parent->children,_iota->name,_iota);
 
-#define CHECK_USERBITS(_userbits)                       \
-    if(_userbits->data==NULL) {                         \
-        ERR("userbits->data NULL is not allowed");      \
+#define CHECK_USERBITS(_user_bits)                      \
+    if(_user_bits->data==NULL) {                        \
+        ERR("user_bits->data NULL is not allowed");     \
         return  NULL;                                   \
     }                                                   \
-    if(_userbits->free_fct==NULL) {                     \
-        ERR("userbits->free_fct NULL is not allowed");  \
+    if(_user_bits->free_fct==NULL) {                    \
+        ERR("user_bits->free_fct NULL is not allowed"); \
         return  NULL;                                   \
     }                                                   \
-    if(_userbits->recv_fct==NULL) {                     \
-        ERR("userbits->recv_fct NULL is not allowed");  \
+    if(_user_bits->recv_fct==NULL) {                    \
+        ERR("user_bits->recv_fct NULL is not allowed"); \
         return  NULL;                                   \
     }                                                   \
 
-/* TODO  userbits->start_fct; userbits->stop_fct; userbits->suspend_fct; userbits->resume_fct; */
+/* TODO  user_bits->start_fct; user_bits->stop_fct; user_bits->suspend_fct; user_bits->resume_fct; */
 
 #ifdef CRITICAL
 #undef CRITICAL
