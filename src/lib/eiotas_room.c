@@ -29,16 +29,9 @@ EAPI Eiotas_Room* eiotas_room_add(const char* name, Eiotas_Room *parent)
 
     BUILD_INSTANCE(Eiotas_Room,room);
 
-    if(eiotas_iota_init(&room->iota,name,parent,EIOTAS_TYPE_ROOM)) {
-        return NULL;
-    }
+    INIT_IOTA(&room->iota,name,parent,EIOTAS_TYPE_ROOM);
 
-    if(eina_hash_find(parent->children,room->iota.name)) {
-        ERR("Room %s already exists in %s",name,parent->iota.path);
-        eiotas_iota_desinit(&room->iota);
-        return NULL;
-    }
-    eina_hash_direct_add(parent->children,room->iota.name,room);
+    ADD_TO_PARENT(parent,(&room->iota),"Room")
 
     room->links = NULL;    // TODO
     room->children = eina_hash_stringshared_new((Eina_Free_Cb)&eiotas_iota_free);
