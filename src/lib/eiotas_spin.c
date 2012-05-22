@@ -22,6 +22,7 @@
 
 #include "eiotas_spin.h"
 #include "eiotas_iota.h"
+#include "eiotas_particle.h"
 #include "eiotas_private.h"
 
 EAPI Eiotas_Spin* eiotas_spin_add(const char* name, unsigned int step)
@@ -57,5 +58,22 @@ EAPI void eiotas_spin_free(Eiotas_Spin *spin)
     eina_array_free(spin->app_fifo);
 
     free(spin);
+}
+
+EAPI Eiotas_Particle* eiotas_spin_require_particle(Eiotas_Spin *spin)
+{
+    Eiotas_Particle *particle;
+    if(eina_array_count(spin->free_particles)>0) {
+        particle = eina_array_pop(spin->free_particles);
+    } else {
+        particle = (Eiotas_Particle*)eiotas_particle_alloc();
+    }
+    return particle;
+}
+
+EAPI Eiotas_Particle* eiotas_spin_release_particle(Eiotas_Spin *spin, Eiotas_Particle *particle)
+{
+    // TODO particle->reset();
+    eina_array_push(spin->free_particles,particle);
 }
 
