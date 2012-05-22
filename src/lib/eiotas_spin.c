@@ -42,7 +42,7 @@ EAPI void eiotas_spin_free(Eiotas_Spin *spin)
     Eiotas_Particle     *particle;
     Eina_Array_Iterator iterator;
 
-    DBG("Spin free 0x%X",spin);
+    DBG("Spin free 0x%X",(unsigned int)spin);
 
     eiotas_iota_desinit(&spin->room.iota);
     eina_hash_free(spin->room.children);
