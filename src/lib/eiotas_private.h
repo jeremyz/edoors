@@ -50,9 +50,9 @@ int eiotas_iota_init(Eiotas_Iota *iota, const char *name, Eiotas_Iota *parent, E
         return NULL;                            \
     }
 
-#define INIT_IOTA(_iota,_name,_parent,_type)            \
-    if(eiotas_iota_init(_iota,_name,_parent,_type)) {   \
-        return NULL;                                    \
+#define INIT_IOTA(_iota,_name,_parent,_type)                            \
+    if(eiotas_iota_init(_iota,_name,(Eiotas_Iota*)_parent,_type)) {     \
+        return NULL;                                                    \
     }
 
 #define ADD_TO_PARENT(_parent,_iota,_st_name)                                       \
