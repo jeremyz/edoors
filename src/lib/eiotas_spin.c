@@ -28,14 +28,7 @@ EAPI Eiotas_Spin* eiotas_spin_add(const char* name, unsigned int step)
 {
     BUILD_INSTANCE(Eiotas_Spin,spin);
 
-    if(name==NULL) {
-        ERR("name can't be NULL");
-        return NULL;
-    }
-
-    if(eiotas_iota_init(&spin->room.iota,name,NULL,EIOTAS_TYPE_SPIN)) {
-        return NULL;
-    }
+    INIT_IOTA(&spin->room.iota,name,NULL,EIOTAS_TYPE_SPIN);
 
     spin->room.links = NULL;    /* not used */
     spin->room.children = eina_hash_stringshared_new((Eina_Free_Cb)&eiotas_iota_free);
