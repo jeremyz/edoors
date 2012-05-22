@@ -32,11 +32,16 @@ int eiotas_iota_init(Eiotas_Iota *iota, const char *name, Eiotas_Iota *parent, E
     int ln, lp;
     char tmp[MAX_PATH_LENGTH];
 
+    ln = strlen(name);
+    if(name==NULL || ln==0) {
+        ERR("name can't be NULL or empty");
+        return 1;
+    }
+
     iota->type = type;
     iota->spin = ( parent ? parent->spin : iota );
     iota->parent = parent;
     if(parent) {
-        ln = strlen(name);
         lp = eina_stringshare_strlen(parent->path);
         if((ln+lp+2)>MAX_PATH_LENGTH) {
             ERR("path length %d is > MAX_PATH_LENGTH (%d)",(ln+lp+2),MAX_PATH_LENGTH);
