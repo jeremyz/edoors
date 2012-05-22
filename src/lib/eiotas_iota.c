@@ -16,10 +16,6 @@
  * if not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifdef HAVE_CONFIG_H
-# include "eina_config.h"
-#endif
-
 #include "eiotas_iota.h"
 #include "eiotas_spin.h"
 #include "eiotas_room.h"

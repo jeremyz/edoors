@@ -19,7 +19,9 @@
 #ifndef __EIOTAS_PRIVATE_H__
 #define __EIOTAS_PRIVATE_H__
 
-#include "eiotas_config.h"
+#ifdef HAVE_CONFIG_H
+# include "eiotas_config.h"
+#endif
 #include "eiotas_main.h"
 
 #include <eina_log.h>
