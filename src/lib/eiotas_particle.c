@@ -28,7 +28,7 @@ Eiotas_Particle* eiotas_particle_alloc()
 
 void eiotas_particle_free(Eiotas_Particle *particle)
 {
-    DBG("Particle free 0x%X",(unsigned int)particle);
+    DBG("Particle free 0x%X",PRINTPTR(particle));
 
     free(particle);
 }

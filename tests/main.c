@@ -3,6 +3,13 @@
 #include <eina_log.h>
 #include <stdio.h>
 
+#undef PRINTPTR
+#ifdef __clang__
+# define PRINTPTR(_p) (unsigned int)_p
+#else
+# define PRINTPTR(_p) (_p)
+#endif
+
 typedef struct {
     char txt[32];
     int idx;
@@ -30,7 +37,7 @@ static void input_show(Input *input)
 
 static void input_receive(const Eiotas_Door *door, Eiotas_Particle *particle, Eiotas_User_Data *data)
 {
-    EINA_LOG_DOM_DBG(_eiotas_log_dom,"input_receive 0x%X\n",(unsigned int)data);
+    EINA_LOG_DOM_DBG(_eiotas_log_dom,"input_receive 0x%X\n",PRINTPTR(data));
 }
 
 int main(int argc, char **argv)

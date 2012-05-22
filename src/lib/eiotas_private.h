@@ -37,6 +37,13 @@ void eiotas_iota_desinit(Eiotas_Iota *iota);
 
 int eiotas_iota_init(Eiotas_Iota *iota, const char *name, Eiotas_Iota *parent, Eiotas_Type type);
 
+#undef PRINTPTR
+#ifdef __clang__
+# define PRINTPTR(_p) (unsigned int)_p
+#else
+# define PRINTPTR(_p) (_p)
+#endif
+
 #define CHECK_PARENT()                      \
     if(parent==NULL) {                      \
         ERR("NULL parent not allowed");     \

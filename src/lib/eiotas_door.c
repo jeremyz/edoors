@@ -38,7 +38,7 @@ EAPI Eiotas_Door* eiotas_door_add(const char* name, Eiotas_Room *parent, Eiotas_
 
 void eiotas_door_free(Eiotas_Door *door)
 {
-    DBG("Door free 0x%X",(unsigned int)door);
+    DBG("Door free 0x%X",PRINTPTR(door));
 
     eiotas_iota_desinit(&door->iota);
     door->user_bits.free_fct(door->user_bits.data);

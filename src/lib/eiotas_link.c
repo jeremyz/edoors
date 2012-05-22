@@ -21,7 +21,7 @@
 
 void eiotas_link_free(Eiotas_Link *link)
 {
-    DBG("Link free 0x%X",(unsigned int)link);
+    DBG("Link free 0x%X",PRINTPTR(link));
     // TODO
 }
 

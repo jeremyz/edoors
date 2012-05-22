@@ -78,14 +78,14 @@ void eiotas_iota_free(Eiotas_Iota *iota)
             eiotas_board_free((Eiotas_Board*)iota);
             break;
         default:
-            CRITICAL("SPANK SPANK: 0x%X type %d is unknown, memory leak",(unsigned int)iota,iota->type);
+            CRITICAL("SPANK SPANK: 0x%X type %d is unknown, memory leak",PRINTPTR(iota),iota->type);
             break;
     }
 }
 
 EAPI void eiotas_iota_show(Eiotas_Iota *iota)
 {
-    DBG("Iota(%d) 0x%X : %s (%s) [0x%X] {0x%X}",iota->type,(unsigned int)iota,iota->name,iota->path,
-            (unsigned int)iota->parent,(unsigned int)iota->spin);
+    DBG("Iota(%d) 0x%X : %s (%s) [0x%X] {0x%X}",iota->type,PRINTPTR(iota),iota->name,iota->path,
+            PRINTPTR(iota->parent),PRINTPTR(iota->spin));
 }
 
