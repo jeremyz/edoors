@@ -20,6 +20,7 @@
 #define __EIOTAS_SPIN_H__
 
 #include "eiotas_room.h"
+#include "eiotas_iota.h"
 #include "eiotas_particle.h"
 
 #include <eina_array.h>
@@ -42,5 +43,9 @@ EAPI Eiotas_Particle*   eiotas_spin_require_particle(Eiotas_Spin *spin);
 EAPI Eiotas_Particle*   eiotas_spin_release_particle(Eiotas_Spin *spin, Eiotas_Particle *particle);
 
 EAPI void               eiotas_spin_send_particle(Eiotas_Spin *spin, Eiotas_Particle *particle, Eina_Bool system);
+
+#define eiotas_require_particle(_iota) eiotas_spin_require_particle((Eiotas_Spin*)((Eiotas_Iota*)(_iota))->spin)
+
+#define eiotas_release_particle(_iota,_particle) eiotas_spin_release_particle((Eiotas_Spin*)((Eiotas_Iota*)(_iota))->spin,_particle)
 
 #endif // __EIOTAS_SPIN_H__
