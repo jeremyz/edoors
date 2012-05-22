@@ -59,16 +59,16 @@ int main(int argc, char **argv)
     }
     room = eiotas_room_add("room0",&dom0->room);
 
-    /* Input *input = input_create("hello world"); */
-    /* input_show(input); */
+    Input *input = input_create("hello world");
+    input_show(input);
 
-    /* Eiotas_User_Bits user_bits; */
+    Eiotas_User_Bits user_bits;
 
-    /* user_bits.data = input; */
-    /* user_bits.free_fct = (Eiotas_User_Data_Free)&input_free; */
-    /* user_bits.recv_fct = (Eiotas_Receive_Particle)&input_receive; */
-    /* Eiotas_Door *din0 = eiotas_door_add("input0",&dom0->room,&user_bits); */
-    /* eiotas_iota_show(&din0->iota); // eiotas_iota_show((Eiotas_Iota*)din0); */
+    user_bits.data = input;
+    user_bits.free_fct = (Eiotas_User_Data_Free)&input_free;
+    user_bits.recv_fct = (Eiotas_Receive_Particle)&input_receive;
+    Eiotas_Door *din0 = eiotas_door_add("input0",&dom0->room,&user_bits);
+    eiotas_iota_show(&din0->iota); // eiotas_iota_show((Eiotas_Iota*)din0);
 
     /* p0 = eiotas_iota_require_particle((Eiotas_Iota*)din0); */
     /* p1 = eiotas_iota_require_particle((Eiotas_Iota*)din0); */
