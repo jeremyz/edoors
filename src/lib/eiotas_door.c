@@ -25,13 +25,28 @@
 
 EAPI Eiotas_Door* eiotas_door_add(const char* name, Eiotas_Room *parent, Eiotas_User_Bits *user_bits)
 {
-    // TODO
-    return NULL;
+    CHECK_PARENT();
+
+    CHECK_USERBITS(user_bits);
+
+    BUILD_INSTANCE(Eiotas_Door,door);
+
+    INIT_IOTA(&door->iota,name,parent,EIOTAS_TYPE_DOOR);
+
+    ADD_TO_PARENT(parent,(&door->iota),"Door")
+
+    memcpy(&door->user_bits,user_bits,sizeof(Eiotas_User_Bits));
+
+    return door;
 }
 
 void eiotas_door_free(Eiotas_Door *door)
 {
     DBG("Door free 0x%X",door);
-    // TODO
+
+    eiotas_iota_desinit(&door->iota);
+    door->user_bits.free_fct(door->user_bits.data);
+
+    free(door);
 }
 
