@@ -36,7 +36,7 @@ static void input_receive(const Eiotas_Door *door, Eiotas_Particle *particle, Ei
 int main(int argc, char **argv)
 {
     int i;
-    Eiotas_Particle *p0, *p1, *p2, *p3;
+    Eiotas_Particle *p0, *p1, *p2, *p3, *p4;
 
     if(eiotas_init()>0) {
         return EXIT_FAILURE;
@@ -70,15 +70,21 @@ int main(int argc, char **argv)
     Eiotas_Door *din0 = eiotas_door_add("input0",&dom0->room,&user_bits);
     eiotas_iota_show(&din0->iota); // eiotas_iota_show((Eiotas_Iota*)din0);
 
-    /* p0 = eiotas_iota_require_particle((Eiotas_Iota*)din0); */
-    /* p1 = eiotas_iota_require_particle((Eiotas_Iota*)din0); */
-    /* p2 = eiotas_iota_require_particle((Eiotas_Iota*)din0); */
-    /* p3 = eiotas_iota_require_particle((Eiotas_Iota*)din0); */
+    p0 = eiotas_require_particle(din0);
+    p1 = eiotas_require_particle(din0);
+    p2 = eiotas_require_particle(din0);
+    p3 = eiotas_require_particle(din0);
 
-    /* eiotas_iota_release_particle((Eiotas_Iota*)din0,p0); */
-    /* eiotas_iota_release_particle((Eiotas_Iota*)din0,p1); */
-    /* eiotas_spin_send_particle(din0->iota.spin,p2,EINA_FALSE); */
-    /* eiotas_spin_send_particle(din0->iota.spin,p3,EINA_TRUE); */
+    eiotas_release_particle(din0,p0);
+    eiotas_release_particle(din0,p1);
+    p4 = eiotas_require_particle(din0);
+    if(p4!=p1) {
+        fprintf(stderr,"Particle require fail\n");
+    }
+    eiotas_release_particle(din0,p4);
+
+    /* eiotas_send_particle(din0,p2,EINA_FALSE); */
+    /* eiotas_send_particle(din0,p3,EINA_TRUE); */
 
     eiotas_spin_free(dom0);
 
