@@ -23,9 +23,17 @@
 #include "eiotas_particle.h"
 #include "eiotas_private.h"
 
+Eiotas_Particle* eiotas_particle_alloc()
+{
+    Eiotas_Particle *particle = (Eiotas_Particle*)malloc(sizeof(Eiotas_Particle));
+
+    return particle;
+}
+
 void eiotas_particle_free(Eiotas_Particle *particle)
 {
     DBG("Particle free 0x%X",particle);
-    // TODO
+
+    free(particle);
 }
 
