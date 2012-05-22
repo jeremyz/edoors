@@ -82,6 +82,7 @@ void eiotas_iota_free(Eiotas_Iota *iota)
 
 EAPI void eiotas_iota_show(Eiotas_Iota *iota)
 {
-    DBG("Iota(%d) 0x%X : %s (%s) [0x%X] {0x%X}",iota->type,iota,iota->name,iota->path,iota->parent,iota->spin);
+    DBG("Iota(%d) 0x%X : %s (%s) [0x%X] {0x%X}",iota->type,(unsigned int)iota,iota->name,iota->path,
+            (unsigned int)iota->parent,(unsigned int)iota->spin);
 }
 

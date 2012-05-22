@@ -37,7 +37,7 @@ EAPI Eiotas_Room* eiotas_room_add(const char* name, Eiotas_Room *parent)
 
 void eiotas_room_free(Eiotas_Room *room)
 {
-    DBG("Room free 0x%X",room);
+    DBG("Room free 0x%X",(unsigned int)room);
 
     eiotas_iota_desinit(&room->iota);
     // TODO room->links

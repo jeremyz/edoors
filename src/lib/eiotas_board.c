@@ -27,7 +27,7 @@ EAPI Eiotas_Board* eiotas_board_add(const char* name, Eiotas_Room *parent, Eiota
 
 void eiotas_board_free(Eiotas_Board *board)
 {
-    DBG("Door free 0x%X",board);
+    DBG("Door free 0x%X",(unsigned int)board);
     // TODO
 }
 
