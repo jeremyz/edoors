@@ -77,6 +77,9 @@ void eiotas_iota_free(Eiotas_Iota *iota)
         case EIOTAS_TYPE_BOARD:
             eiotas_board_free((Eiotas_Board*)iota);
             break;
+        default:
+            CRITICAL("SPANK SPANK: 0x%X type %d is unknown, memory leak",(unsigned int)iota,iota->type);
+            break;
     }
 }
 
