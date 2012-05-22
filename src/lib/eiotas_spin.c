@@ -67,7 +67,7 @@ EAPI Eiotas_Particle* eiotas_spin_require_particle(Eiotas_Spin *spin)
     return particle;
 }
 
-EAPI Eiotas_Particle* eiotas_spin_release_particle(Eiotas_Spin *spin, Eiotas_Particle *particle)
+EAPI void eiotas_spin_release_particle(Eiotas_Spin *spin, Eiotas_Particle *particle)
 {
     // TODO particle->reset();
     eina_array_push(spin->free_particles,particle);

@@ -40,7 +40,7 @@ EAPI Eiotas_Spin*       eiotas_spin_add(const char* name, unsigned int step);
 
 EAPI Eiotas_Particle*   eiotas_spin_require_particle(Eiotas_Spin *spin);
 
-EAPI Eiotas_Particle*   eiotas_spin_release_particle(Eiotas_Spin *spin, Eiotas_Particle *particle);
+EAPI void               eiotas_spin_release_particle(Eiotas_Spin *spin, Eiotas_Particle *particle);
 
 EAPI void               eiotas_spin_send_particle(Eiotas_Spin *spin, Eiotas_Particle *particle, Eina_Bool system);
 
