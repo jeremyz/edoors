@@ -23,6 +23,7 @@
 # include "eiotas_config.h"
 #endif
 #include "eiotas_main.h"
+#include "eiotas_iota.h"
 
 #include <eina_log.h>
 #undef EINA_LOG_DOMAIN_DEFAULT
@@ -31,6 +32,10 @@
 
 #define MAX_PATH_LENGTH 256
 #define PATH_SEP '/'
+
+void eiotas_iota_desinit(Eiotas_Iota *iota);
+
+int eiotas_iota_init(Eiotas_Iota *iota, const char *name, Eiotas_Iota *parent, Eiotas_Type type);
 
 #define CHECK_PARENT()                      \
     if(parent==NULL) {                      \
