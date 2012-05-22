@@ -31,6 +31,8 @@ struct _Eiotas_Room {
     Eina_Hash *children;        /* stringshared values optimized hash table holding Rooms, Doors and Boards */
 };
 
+void eiotas_room_free(Eiotas_Room *room);
+
 EAPI Eiotas_Room*   eiotas_room_add(const char* name, Eiotas_Room *parent);
 
 #endif // __EIOTAS_ROOM_H__

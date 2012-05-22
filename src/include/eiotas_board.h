@@ -33,6 +33,8 @@ struct _Eiotas_Board {
     Eina_Hash *postponed;       /* TODO Particles */
 };
 
+void eiotas_board_free(Eiotas_Board *board);
+
 EAPI Eiotas_Board*  eiotas_board_add(const char* name, Eiotas_Room *parent, Eiotas_User_Bits *user_bits);
 
 #endif // __EIOTAS_BOARD_H__

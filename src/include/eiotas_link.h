@@ -24,4 +24,6 @@ typedef struct _Eiotas_Link Eiotas_Link;
 struct _Eiotas_Link {
 };
 
+void eiotas_link_free(Eiotas_Link *link);
+
 #endif // __EIOTAS_LINK_H__

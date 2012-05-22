@@ -32,6 +32,8 @@ struct _Eiotas_Door {
     Eiotas_User_Bits user_bits; /* user bits */
 };
 
+void eiotas_door_free(Eiotas_Door *door);
+
 EAPI Eiotas_Door*   eiotas_door_add(const char* name, Eiotas_Room *parent, Eiotas_User_Bits *user_bits);
 
 #endif // __EIOTAS_DOOR_H__
