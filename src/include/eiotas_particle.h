@@ -28,4 +28,6 @@ struct _Eiotas_Particle {
     Eina_Stringshare *src;      /* TODO */
 };
 
+Eiotas_Particle* eiotas_particle_alloc();
+
 #endif // __EIOTAS_PARTICLE_H__
