@@ -30,7 +30,7 @@ static void input_show(Input *input)
 
 static void input_receive(const Eiotas_Door *door, Eiotas_Particle *particle, Eiotas_User_Data *data)
 {
-    EINA_LOG_DOM_DBG(_eiotas_log_dom,"input_receive 0x%X\n",data);
+    EINA_LOG_DOM_DBG(_eiotas_log_dom,"input_receive 0x%X\n",(unsigned int)data);
 }
 
 int main(int argc, char **argv)
