@@ -18,6 +18,8 @@
 
 #include "eiotas_main.h"
 #include "eiotas_private.h"
+
+#include "eina_main.h"
 #include <stdio.h>
 
 int _eiotas_log_dom;
