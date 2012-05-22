@@ -43,6 +43,19 @@
         return NULL;                            \
     }
 
+#define INIT_IOTA(_iota,_name,_parent,_type)            \
+    if(eiotas_iota_init(_iota,_name,_parent,_type)) {   \
+        return NULL;                                    \
+    }
+
+#define ADD_TO_PARENT(_parent,_iota,_st_name)                                       \
+    if(eina_hash_find(_parent->children,_iota->name)) {                             \
+        ERR("%s %s already exists in %s",_st_name,_iota->name,parent->iota.path);   \
+        eiotas_iota_desinit(_iota);                                                 \
+        return NULL;                                                                \
+    }                                                                               \
+    eina_hash_direct_add(_parent->children,_iota->name,_iota);
+
 #ifdef CRITICAL
 #undef CRITICAL
 #endif
