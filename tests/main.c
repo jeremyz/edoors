@@ -90,8 +90,8 @@ int main(int argc, char **argv)
     }
     eiotas_release_particle(din0,p4);
 
-    /* eiotas_send_particle(din0,p2,EINA_FALSE); */
-    /* eiotas_send_particle(din0,p3,EINA_TRUE); */
+    eiotas_spin_send_particle((Eiotas_Spin*)din0->iota.spin,p2,EINA_FALSE);
+    eiotas_spin_send_particle((Eiotas_Spin*)din0->iota.spin,p3,EINA_TRUE);
 
     eiotas_spin_free(dom0);
 
