@@ -23,7 +23,7 @@
 #include "eiotas_iota.h"
 #include "eiotas_particle.h"
 
-#include <eina_list.h>
+#include <eina_inlist.h>
 #include <eina_array.h>
 
 typedef struct _Eiotas_Spin Eiotas_Spin;
@@ -31,8 +31,8 @@ typedef struct _Eiotas_Spin Eiotas_Spin;
 struct  _Eiotas_Spin {
     Eiotas_Room     room;               /* higher level Room */
     Eina_Array      *free_particles;    /* lifo of free to reuse Particles TODO support different particle types, use an Eina_Hash */
-    Eina_List       *app_fifo;          /* fifo of application priority particles */
-    Eina_List       *sys_fifo;          /* fifo of system priority particles */
+    Eina_Inlist     *app_fifo;          /* fifo of application priority particles */
+    Eina_Inlist     *sys_fifo;          /* fifo of system priority particles */
 };
 
 EAPI void               eiotas_spin_free(Eiotas_Spin *spin);

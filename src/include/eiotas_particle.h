@@ -20,12 +20,13 @@
 #define __EIOTAS_PARTICLE_H__
 
 #include <eina_types.h>
+#include <eina_inlist.h>
 #include <eina_stringshare.h>
 
 typedef struct _Eiotas_Particle Eiotas_Particle;
 
 struct _Eiotas_Particle {
-    Eina_Stringshare *src;      /* TODO */
+    EINA_INLIST;
 };
 
 void eiotas_particle_free(Eiotas_Particle *particle);
