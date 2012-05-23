@@ -26,9 +26,9 @@
 typedef struct _Eiotas_Room Eiotas_Room;
 
 struct _Eiotas_Room {
-    Eiotas_Iota iota;           /* structural info */
-    Eina_Hash *links;           /* TODO */
-    Eina_Hash *children;        /* stringshared values optimized hash table holding Rooms, Doors and Boards */
+    Eiotas_Iota     iota;       /* structural info */
+    Eina_Hash       *links;     /* TODO */
+    Eina_Hash       *children;  /* stringshared values optimized hash table holding Rooms, Doors and Boards */
 };
 
 void eiotas_room_free(Eiotas_Room *room);

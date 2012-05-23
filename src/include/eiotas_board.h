@@ -28,9 +28,9 @@
 typedef struct _Eiotas_Board Eiotas_Board;
 
 struct _Eiotas_Board {
-    Eiotas_Iota iota;           /* structural info */
-    Eiotas_User_Bits user_bits; /* user bits */
-    Eina_Hash *postponed;       /* TODO Particles */
+    Eiotas_Iota         iota;           /* structural info */
+    Eiotas_User_Bits    user_bits;      /* user bits */
+    Eina_Hash           *postponed;     /* TODO Particles */
 };
 
 void eiotas_board_free(Eiotas_Board *board);

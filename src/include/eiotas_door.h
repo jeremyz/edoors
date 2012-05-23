@@ -28,8 +28,8 @@
 typedef struct _Eiotas_Door Eiotas_Door;
 
 struct _Eiotas_Door {
-    Eiotas_Iota iota;           /* structural info */
-    Eiotas_User_Bits user_bits; /* user bits */
+    Eiotas_Iota         iota;       /* structural info */
+    Eiotas_User_Bits    user_bits;  /* user bits */
 };
 
 void eiotas_door_free(Eiotas_Door *door);

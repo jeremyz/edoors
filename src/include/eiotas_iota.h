@@ -33,11 +33,11 @@ typedef enum _Eiotas_Type
 typedef struct _Eiotas_Iota Eiotas_Iota;
 
 struct _Eiotas_Iota {
-    Eiotas_Type type;           /* type of the iota */
-    Eiotas_Iota *spin;          /* top level iota which is a Eiota_Spin */
-    Eiotas_Iota *parent;        /* direct parent in the hierarchy */
-    Eina_Stringshare *name;     /* iota's name */
-    Eina_Stringshare *path;     /* full path to this iota */
+    Eiotas_Type         type;       /* type of the iota */
+    Eiotas_Iota         *spin;      /* top level iota which is a Eiotas_Spin */
+    Eiotas_Iota         *parent;    /* direct parent in the hierarchy */
+    Eina_Stringshare    *name;      /* iota's name */
+    Eina_Stringshare    *path;      /* full path to this iota */
 };
 
 EAPI void eiotas_iota_show(Eiotas_Iota *iota);

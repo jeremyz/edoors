@@ -25,21 +25,27 @@
 typedef struct _Eiotas_User_Bits Eiotas_User_Bits;
 
 typedef void Eiotas_User_Data;
-typedef void (*Eiotas_User_Data_Free)(Eiotas_User_Data*);
-typedef void (*Eiotas_Receive_Particle)(Eiotas_Iota *iota, Eiotas_Particle *particle, Eiotas_User_Data *data);
-typedef void (*Eiotas_Start)(Eiotas_Iota *iota, Eiotas_User_Data *data);
-typedef void (*Eiotas_Suspend)(Eiotas_Iota *iota, Eiotas_User_Data *data);
-typedef void (*Eiotas_Resume)(Eiotas_Iota *iota, Eiotas_User_Data *data);
-typedef void (*Eiotas_Stop)(Eiotas_Iota *iota, Eiotas_User_Data *data);
+
+typedef void (*Eiotas_User_Data_Free)   (Eiotas_User_Data*);
+
+typedef void (*Eiotas_Receive_Particle) (Eiotas_Iota *iota, Eiotas_Particle *particle, Eiotas_User_Data *data);
+
+typedef void (*Eiotas_Init)     (Eiotas_Iota *iota, Eiotas_User_Data *data);
+
+typedef void (*Eiotas_Shutdown) (Eiotas_Iota *iota, Eiotas_User_Data *data);
+
+typedef void (*Eiotas_Suspend)  (Eiotas_Iota *iota, Eiotas_User_Data *data);
+
+typedef void (*Eiotas_Resume)   (Eiotas_Iota *iota, Eiotas_User_Data *data);
 
 struct _Eiotas_User_Bits {
-    Eiotas_User_Data *data;
-    Eiotas_User_Data_Free free_fct;
-    Eiotas_Receive_Particle recv_fct;
-    Eiotas_Start start_fct;
-    Eiotas_Stop stop_fct;
-    Eiotas_Suspend suspend_fct;
-    Eiotas_Resume resume_fct;
+    Eiotas_User_Data        *data;          /* user data */
+    Eiotas_User_Data_Free   free_fct;       /* to free user data */
+    Eiotas_Receive_Particle recv_fct;       /* to receive and process a particle */
+    Eiotas_Init             init_fct;       /* to initialize user data on system init */
+    Eiotas_Shutdown         shutdown_fct;   /* to finalize user data on system shutdown */
+    Eiotas_Suspend          suspend_fct;    /* to serialize user data on system shutdown */
+    Eiotas_Resume           resume_fct;     /* to deserialize data on system resume */
 };
 
 #endif // __EIOTAS_USERBITS_H__
