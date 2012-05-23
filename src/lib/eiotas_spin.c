@@ -30,8 +30,8 @@ EAPI Eiotas_Spin* eiotas_spin_add(const char* name, unsigned int step)
     spin->room.links = NULL;    /* not used */
     spin->room.children = eina_hash_stringshared_new((Eina_Free_Cb)&eiotas_iota_free);
     spin->free_particles = eina_array_new(step);
-    spin->sys_fifo = eina_array_new(step);
-    spin->app_fifo = eina_array_new(step);
+    spin->sys_fifo = NULL;
+    spin->app_fifo = NULL;
 
     return spin;
 }
@@ -41,17 +41,19 @@ EAPI void eiotas_spin_free(Eiotas_Spin *spin)
     unsigned int        i;
     Eiotas_Particle     *particle;
     Eina_Array_Iterator iterator;
+    Eina_List *list;
+    Eina_List *l;
 
     DBG("Spin free 0x%X",PRINTPTR(spin));
 
     eiotas_iota_desinit(&spin->room.iota);
     eina_hash_free(spin->room.children);
     EINA_ARRAY_ITER_NEXT(spin->free_particles, i, particle, iterator) eiotas_particle_free(particle);
-    EINA_ARRAY_ITER_NEXT(spin->sys_fifo, i, particle, iterator) eiotas_particle_free(particle);
-    EINA_ARRAY_ITER_NEXT(spin->app_fifo, i, particle, iterator) eiotas_particle_free(particle);
     eina_array_free(spin->free_particles);
-    eina_array_free(spin->sys_fifo);
-    eina_array_free(spin->app_fifo);
+    EINA_LIST_FOREACH(spin->sys_fifo, l, particle) eiotas_particle_free(particle);
+    eina_list_free(spin->sys_fifo);
+    EINA_LIST_FOREACH(spin->app_fifo, l, particle) eiotas_particle_free(particle);
+    eina_list_free(spin->app_fifo);
 
     free(spin);
 }
@@ -76,9 +78,9 @@ EAPI void eiotas_spin_release_particle(Eiotas_Spin *spin, Eiotas_Particle *parti
 EAPI void eiotas_spin_send_particle(Eiotas_Spin *spin, Eiotas_Particle *particle, Eina_Bool system)
 {
     if(system) {
-        eina_array_push(spin->sys_fifo,particle);
+        spin->sys_fifo = eina_list_append(spin->sys_fifo,particle);
     } else {
-        eina_array_push(spin->app_fifo,particle);
+        spin->app_fifo = eina_list_append(spin->app_fifo,particle);
     }
 }
 
