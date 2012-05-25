@@ -68,7 +68,15 @@ EAPI Eiotas_Particle* eiotas_spin_require_particle(Eiotas_Spin *spin)
 
 EAPI void eiotas_spin_release_particle(Eiotas_Spin *spin, Eiotas_Particle *particle)
 {
-    // TODO particle->reset();
+    Eiotas_Particle     *p;
+    Eina_Inlist         *list;
+
+    while (particle->merged) {
+        p = EINA_INLIST_CONTAINER_GET(particle->merged,Eiotas_Particle);
+        particle->merged = eina_inlist_remove(particle->merged,particle->merged);
+        eiotas_spin_release_particle(spin,p);
+    }
+    eiotas_particle_reset(particle);
     eina_array_push(spin->free_particles,particle);
 }
 
