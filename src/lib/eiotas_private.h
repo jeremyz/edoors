@@ -30,8 +30,10 @@
 #define EINA_LOG_DOMAIN_DEFAULT eiotas_log_dom
 #define EIOTA_LOG_DOMAIN "eiotas"
 
-#define MAX_PATH_LENGTH 256
-#define PATH_SEP '/'
+#define EIOTAS_MAX_PATH_LENGTH 256
+#define EIOTAS_MAX_ACTION_LENGTH 16
+#define EIOTAS_PATH_SEP '/'
+#define EIOTAS_PARTICLE_ARRAY_STEP 3
 
 void eiotas_iota_desinit(Eiotas_Iota *iota);
 

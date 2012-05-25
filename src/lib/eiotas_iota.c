@@ -26,7 +26,7 @@
 int eiotas_iota_init(Eiotas_Iota *iota, const char *name, Eiotas_Iota *parent, Eiotas_Type type)
 {
     int ln, lp;
-    char tmp[MAX_PATH_LENGTH];
+    char tmp[EIOTAS_MAX_PATH_LENGTH];
 
     ln = strlen(name);
     if(name==NULL || ln==0) {
@@ -39,8 +39,8 @@ int eiotas_iota_init(Eiotas_Iota *iota, const char *name, Eiotas_Iota *parent, E
     iota->parent = parent;
     if(parent) {
         lp = eina_stringshare_strlen(parent->path);
-        if((ln+lp+2)>MAX_PATH_LENGTH) {
-            ERR("path length %d is > MAX_PATH_LENGTH (%d)",(ln+lp+2),MAX_PATH_LENGTH);
+        if((ln+lp+2)>EIOTAS_MAX_PATH_LENGTH) {
+            ERR("path length %d is > EIOTAS_MAX_PATH_LENGTH (%d)",(ln+lp+2),EIOTAS_MAX_PATH_LENGTH);
             return 1;
         }
         memcpy(tmp,parent->path,lp);
