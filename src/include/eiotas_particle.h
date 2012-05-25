@@ -19,14 +19,26 @@
 #ifndef __EIOTAS_PARTICLE_H__
 #define __EIOTAS_PARTICLE_H__
 
-#include <eina_types.h>
+#include <time.h>
+#include <eina_hash.h>
+#include <eina_array.h>
 #include <eina_inlist.h>
 #include <eina_stringshare.h>
+
+#include "eiotas_iota.h"
 
 typedef struct _Eiotas_Particle Eiotas_Particle;
 
 struct _Eiotas_Particle {
     EINA_INLIST;
+    time_t ts;                          /* creation time */
+    Eiotas_Iota         *src;           /* where it's born */
+    Eiotas_Iota         *dst;           /* current destination */
+    Eina_Array          *dsts;          /* array of destinatinon strings */
+    Eina_Hash           *payload;       /* string data carried by this particle */
+    Eina_Inlist         *merged;        /* list of merged particles */
+    Eina_Array          *link_fields;   /* fields used to generate the link value */
+    Eina_Stringshare    *link_value;    /* computed from link_fields and paylod, used for pearing particles */
 };
 
 void eiotas_particle_free(Eiotas_Particle *particle);
