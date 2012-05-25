@@ -43,7 +43,7 @@ static void input_receive(const Eiotas_Door *door, Eiotas_Particle *particle, Ei
 int main(int argc, char **argv)
 {
     int i;
-    Eiotas_Particle *p0, *p1, *p2, *p3, *p4;
+    Eiotas_Particle *p0, *p1, *p2, *p3, *p4, *p5, *p6, *p7, *p8, *p9, *p10;
 
     if(eiotas_init()>0) {
         return EXIT_FAILURE;
@@ -81,17 +81,31 @@ int main(int argc, char **argv)
     p1 = eiotas_require_particle(din0);
     p2 = eiotas_require_particle(din0);
     p3 = eiotas_require_particle(din0);
+    p4 = eiotas_require_particle(din0);
+    p5 = eiotas_require_particle(din0);
+    p6 = eiotas_require_particle(din0);
+    p7 = eiotas_require_particle(din0);
+    p8 = eiotas_require_particle(din0);
+    p9 = eiotas_require_particle(din0);
 
     eiotas_release_particle(din0,p0);
     eiotas_release_particle(din0,p1);
-    p4 = eiotas_require_particle(din0);
-    if(p4!=p1) {
+    p10 = eiotas_require_particle(din0);
+    if(p10!=p1) {
         fprintf(stderr,"Particle require fail\n");
     }
-    eiotas_release_particle(din0,p4);
+    eiotas_release_particle(din0,p10);
 
     eiotas_spin_send_particle((Eiotas_Spin*)din0->iota.spin,p2,EINA_FALSE);
     eiotas_spin_send_particle((Eiotas_Spin*)din0->iota.spin,p3,EINA_TRUE);
+
+    eiotas_particle_merge(p4,p5);
+    eiotas_particle_merge(p4,p6);
+    eiotas_particle_merge(p5,p7);
+    eiotas_particle_merge(p5,p8);
+    eiotas_particle_merge(p5,p9);
+
+    eiotas_release_particle(din0,p4);
 
     eiotas_spin_free(dom0);
 
