@@ -45,4 +45,10 @@ void eiotas_particle_free(Eiotas_Particle *particle);
 
 Eiotas_Particle* eiotas_particle_alloc();
 
+EAPI void eiotas_particle_reset(Eiotas_Particle *particle);
+
+EAPI void eiotas_particle_init(Eiotas_Particle *particle, Eiotas_Iota *iota);
+
+EAPI void eiotas_particle_merge(Eiotas_Particle *particle, Eiotas_Particle *p);
+
 #endif // __EIOTAS_PARTICLE_H__
