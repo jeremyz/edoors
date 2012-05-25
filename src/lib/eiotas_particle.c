@@ -21,14 +21,37 @@
 
 Eiotas_Particle* eiotas_particle_alloc()
 {
-    Eiotas_Particle *particle = (Eiotas_Particle*)malloc(sizeof(Eiotas_Particle));
+    BUILD_INSTANCE(Eiotas_Particle,particle);
+
+    particle->ts = 0;
+    particle->src = NULL;
+    particle->dst = NULL;
+    particle->dsts = eina_array_new(EIOTAS_PARTICLE_ARRAY_STEP);
+    particle->payload = eina_hash_string_small_new(NULL);           // TODO data delete function
+    particle->merged = NULL;
+    particle->link_fields = eina_array_new(EIOTAS_PARTICLE_ARRAY_STEP);
+    particle->link_value = NULL;
 
     return particle;
 }
 
 void eiotas_particle_free(Eiotas_Particle *particle)
 {
+    unsigned int        i;
+    char                *s;
+    Eiotas_Particle     *p;
+    Eina_Inlist         *li;
+    Eina_Array_Iterator it;
+
     DBG("Particle free 0x%X",PRINTPTR(particle));
+
+    EINA_ARRAY_ITER_NEXT(particle->dsts, i, s, it) free(s);
+    eina_array_free(particle->dsts);
+    eina_hash_free(particle->payload);
+    EINA_INLIST_FOREACH_SAFE(particle->merged, li, p) eiotas_particle_free(p);
+    EINA_ARRAY_ITER_NEXT(particle->link_fields, i, s, it) free(s);
+    eina_array_free(particle->link_fields);
+    if(particle->link_value) eina_stringshare_del(particle->link_value);
 
     free(particle);
 }
