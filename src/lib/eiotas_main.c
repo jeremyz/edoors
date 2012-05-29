@@ -22,6 +22,8 @@
 #include "eina_main.h"
 #include <stdio.h>
 
+static int _eiotas_main_count = 0;
+
 int _eiotas_log_dom;
 
 static Eiotas_Version _version = { VMAJ, VMIN, VMIC };
@@ -30,18 +32,27 @@ EAPI Eiotas_Version *eiotas_version = &_version;
 
 EAPI int eiotas_init()
 {
+    if (EINA_LIKELY(_eiotas_main_count > 0))
+      return ++_eiotas_main_count;
+
     if(!eina_init()) {
         fprintf(stderr,"Error during the initialization of Eina_Log module\n");
         return EXIT_FAILURE;
     }
 
     _eiotas_log_dom = eina_log_domain_register("eiotas", EINA_COLOR_CYAN);
+    _eiotas_main_count = 1;
 
-    return EXIT_SUCCESS;
+    return 1;
 }
 
 EAPI int eiotas_shutdown()
 {
-    return eina_shutdown();
+   _eiotas_main_count--;
+   if (EINA_UNLIKELY(_eiotas_main_count == 0)) {
+       eina_shutdown();
+   }
+
+   return _eiotas_main_count;
 }
 
