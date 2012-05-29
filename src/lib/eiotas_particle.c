@@ -94,7 +94,6 @@ EAPI void eiotas_particle_add_destinations(Eiotas_Particle *particle, char* dest
     int n;
     char *dst, *sep;
     Eina_Stringshare *shared;
-    char tmp[EIOTAS_MAX_PATH_LENGTH];
 
     dst = destinations;
     for(; *dst;) {
@@ -104,12 +103,8 @@ EAPI void eiotas_particle_add_destinations(Eiotas_Particle *particle, char* dest
         n = (sep-dst);
         if(n==0) {
             ERR("ignore empty destination");
-        } else if(n+1>EIOTAS_MAX_PATH_LENGTH) {
-            ERR("buffer overflow (%d)",n+1);
         } else {
-            memcpy(tmp,dst,n);
-            tmp[n]='\0';
-            shared = eina_stringshare_add(tmp);
+            shared = eina_stringshare_add_length(dst,n);
             eina_array_push(particle->dsts,shared);
             DBG("add dst >%s<",shared);
         }
