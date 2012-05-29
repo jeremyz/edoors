@@ -89,3 +89,33 @@ EAPI void eiotas_particle_merge(Eiotas_Particle *particle, Eiotas_Particle *p)
     particle->merged = eina_inlist_append(particle->merged, EINA_INLIST_GET(p));
 }
 
+EAPI void eiotas_particle_add_destinations(Eiotas_Particle *particle, char* destinations)
+{
+    int n;
+    char *dst, *sep;
+    Eina_Stringshare *shared;
+    char tmp[EIOTAS_MAX_PATH_LENGTH];
+
+    dst = destinations;
+    for(; *dst;) {
+        for(; *dst==' '; dst++) /* eat leading spaces */;
+        sep = dst;
+        for(; (*sep && *sep!=EIOTAS_FIELDS_SEP && *sep!=' '); sep++) /* search destination end */;
+        n = (sep-dst);
+        if(n==0) {
+            ERR("ignore empty destination");
+        } else if(n+2>EIOTAS_MAX_PATH_LENGTH) {
+            ERR("buffer overflow (%d)",n);
+        } else {
+            memcpy(tmp,dst,n);
+            tmp[n]='\0';
+            shared = eina_stringshare_add(tmp);
+            eina_array_push(particle->dsts,shared);
+            DBG("add dst >%s<",shared);
+        }
+        for(; (*sep && *sep!=EIOTAS_FIELDS_SEP); sep++) /* eat whatever following */;
+        if(!*sep) return;
+        dst=sep+1;
+    }
+}
+

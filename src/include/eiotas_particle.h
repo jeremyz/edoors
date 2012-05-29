@@ -51,4 +51,6 @@ EAPI void eiotas_particle_init(Eiotas_Particle *particle, Eiotas_Iota *iota);
 
 EAPI void eiotas_particle_merge(Eiotas_Particle *particle, Eiotas_Particle *p);
 
+EAPI void eiotas_particle_add_destinations(Eiotas_Particle *particle, char* destinations);
+
 #endif // __EIOTAS_PARTICLE_H__
