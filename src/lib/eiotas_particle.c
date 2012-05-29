@@ -104,8 +104,8 @@ EAPI void eiotas_particle_add_destinations(Eiotas_Particle *particle, char* dest
         n = (sep-dst);
         if(n==0) {
             ERR("ignore empty destination");
-        } else if(n+2>EIOTAS_MAX_PATH_LENGTH) {
-            ERR("buffer overflow (%d)",n);
+        } else if(n+1>EIOTAS_MAX_PATH_LENGTH) {
+            ERR("buffer overflow (%d)",n+1);
         } else {
             memcpy(tmp,dst,n);
             tmp[n]='\0';

@@ -40,7 +40,7 @@ int eiotas_iota_init(Eiotas_Iota *iota, const char *name, Eiotas_Iota *parent, E
     if(parent) {
         lp = eina_stringshare_strlen(parent->path);
         if((ln+lp+2)>EIOTAS_MAX_PATH_LENGTH) {
-            ERR("path length %d is > EIOTAS_MAX_PATH_LENGTH (%d)",(ln+lp+2),EIOTAS_MAX_PATH_LENGTH);
+            ERR("buffer overflow (%d)",(ln+lp+2));
             return 1;
         }
         memcpy(tmp,parent->path,lp);
