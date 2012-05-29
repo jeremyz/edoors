@@ -45,7 +45,7 @@ int main(int argc, char **argv)
     int i;
     Eiotas_Particle *p0, *p1, *p2, *p3, *p4, *p5, *p6, *p7, *p8, *p9, *p10;
 
-    if(eiotas_init()>0) {
+    if(eiotas_init()==0) {
         return EXIT_FAILURE;
     }
     eina_log_domain_level_set("eiotas",EINA_LOG_LEVEL_DBG);
@@ -115,7 +115,6 @@ int main(int argc, char **argv)
     eiotas_release_particle(din0,p4);
 
     eiotas_spin_free(dom0);
-
 
     return eiotas_shutdown();
 }
