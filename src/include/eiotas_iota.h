@@ -46,29 +46,51 @@ typedef struct _Eiotas_Iota Eiotas_Iota;
  */
 struct _Eiotas_Iota {
     Eiotas_Type         type;       /**< type of the iota */
-    Eiotas_Iota         *spin;      /**< top level iota which is a Eiotas_Spin */
+    Eiotas_Iota         *spin;      /**< top level iota which is a @ref Eiotas_Spin */
     Eiotas_Iota         *parent;    /**< direct parent in the hierarchy */
     Eina_Stringshare    *name;      /**< iota's name */
-    Eina_Stringshare    *path;      /**< full path to this Eiotas_Iota */
+    Eina_Stringshare    *path;      /**< full path to this @ref Eiotas_Iota */
 };
+
+/**
+ * @defgroup Eiotas_Iota Eiotas_Iota
+ *
+ * This is the structural info stored in each @ref Eiotas_Room, @ref Eiotas_Door, @ref Eiotas_Board
+ *
+ * @{
+ */
 
 /**
  * @brief Print iota information using EINA_LOG_DBG.
  *
- * @param iota The Eiotas_Iota to show.
+ * @param iota The @ref Eiotas_Iota to show.
  */
 EAPI void eiotas_iota_show(Eiotas_Iota *iota);
 
 /**
  * @brief Free allocated resources.
  *
- * @param iota The Eiotas_Iota to free.
+ * @param iota The @ref Eiotas_Iota to free.
  *
  */
 void eiotas_iota_free(Eiotas_Iota *iota);
 
+/**
+ * @brief Require a @ref Eiotas_Particle from the free list.
+ *
+ * @see eiotas_spin_require_particle
+ */
 #define eiotas_iota_require_particle(_iota) eiotas_spin_require_particle((Eiotas_Spin*)(_iota)->spin)
 
+/**
+ * @brief Release a particle.
+ *
+ * @see eiotas_spin_release_particle
+ */
 #define eiotas_iota_release_particle(_iota,_particle) eiotas_spin_release_particle((Eiotas_Spin*)(_iota)->spin,_particle)
+
+/**
+ * @}
+ */
 
 #endif // __EIOTAS_IOTA_H__

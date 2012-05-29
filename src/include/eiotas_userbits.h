@@ -24,13 +24,13 @@
 
 /**
  * @typedef Eiotas_User_Bits
- * Type for a Eiotas_User_Bits.
+ * Type for a @ref Eiotas_User_Bits.
  */
 typedef struct _Eiotas_User_Bits Eiotas_User_Bits;
 
 /**
  * @typedef Eiotas_User_Data
- * Struct for user allocated data attached to a Eiotas_Door or a Eiotas_Board
+ * Struct for user allocated data attached to a @ref Eiotas_Door or a @ref Eiotas_Board
  */
 typedef void Eiotas_User_Data;
 
@@ -45,7 +45,7 @@ typedef void (*Eiotas_User_Data_Free)   (Eiotas_User_Data*);
 
 /**
  * @typedef Eiotas_Receive_Particle
- * Type for function called on Eiotas_Particle receive
+ * Type for function called on @ref Eiotas_Particle receive
  */
 typedef void (*Eiotas_Receive_Particle) (Eiotas_Iota *iota, Eiotas_Particle *particle, Eiotas_User_Data *data);
 
@@ -74,13 +74,13 @@ typedef void (*Eiotas_Suspend)  (Eiotas_Iota *iota, Eiotas_User_Data *data);
 typedef void (*Eiotas_Resume)   (Eiotas_Iota *iota, Eiotas_User_Data *data);
 
 /**
- * @typedef _Eiotas_User_Bits
- * Type for a Eiotas_User_Bits.
+ * @struct _Eiotas_User_Bits
+ * Struct for a Eiotas_User_Bits.
  */
 struct _Eiotas_User_Bits {
     Eiotas_User_Data        *data;          /**< user data */
     Eiotas_User_Data_Free   free_fct;       /**< to free user data */
-    Eiotas_Receive_Particle recv_fct;       /**< to receive and process a Eiotas_Particle */
+    Eiotas_Receive_Particle recv_fct;       /**< to receive and process a @ref Eiotas_Particle */
     Eiotas_Init             init_fct;       /**< to initialize user data on system init */
     Eiotas_Shutdown         shutdown_fct;   /**< to finalize user data on system shutdown */
     Eiotas_Suspend          suspend_fct;    /**< to serialize user data on system shutdown */

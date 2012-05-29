@@ -25,39 +25,51 @@
 
 /**
  * @typedef Eiotas_Room
- * Type for a Room, which holds other child Eiotas_Iotas.
+ * Type for a Room, which holds other child @ref Eiotas_Iota.
  */
 typedef struct _Eiotas_Room Eiotas_Room;
 
 /**
  * @struct _Eiotas_Room
- * Struct for a Room, which holds other child Eiotas_Iotas.
+ * Struct for a Room, which holds other child @ref Eiotas_Iota.
  */
 struct _Eiotas_Room {
-    Eiotas_Iota     iota;       /**< Eiotas_Iota structural info */
+    Eiotas_Iota     iota;       /**< @ref Eiotas_Iota structural info */
     Eina_Hash       *links;     /**< TODO */
-    Eina_Hash       *children;  /**< stringshared values optimized hash table holding Eiotas_Iotas */
+    Eina_Hash       *children;  /**< stringshared values optimized hash table holding @ref Eiotas_Iota */
 };
+
+/**
+ * @defgroup Eiotas_Room Eiotas_Room
+ *
+ * A Eiota_Room may hold children @ref Eiotas_Room or @ref Eiotas_Door (@ref Eiotas_Board).
+ *
+ * @{
+ */
 
 /**
  * @brief Free allocated resources.
  *
- * @param room The Eiotas_Room to free.
+ * @param room The @ref Eiotas_Room to free.
  *
- * This function will free all it's child Eiotas_Iotas.
+ * This function will free all it's child @ref Eiotas_Iota.
  */
 void eiotas_room_free(Eiotas_Room *room);
 
 /**
  * @brief Print iota information using EINA_LOG_DBG.
  *
- * @param name The name of this Eiotas_Iota.
- * @param parent The direct hierarchical parent Eiotas_Room.
+ * @param name The name of this @ref Eiotas_Iota.
+ * @param parent The direct hierarchical parent @ref Eiotas_Room.
  *
- * @return the new Eiotas_Room, @c NULL on failure
+ * @return the new @ref Eiotas_Room, @c NULL on failure
  *
- * This function will register the new room as a child of it's parent Eiotas_Room.
+ * This function will register the new room as a child of it's parent @ref Eiotas_Room.
  */
 EAPI Eiotas_Room*   eiotas_room_add(const char* name, Eiotas_Room *parent);
+
+/**
+ * @}
+ */
 
 #endif // __EIOTAS_ROOM_H__

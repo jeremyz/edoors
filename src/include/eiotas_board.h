@@ -42,9 +42,19 @@ struct _Eiotas_Board {
 };
 
 /**
+ * @defgroup Eiotas_Board Eiotas_Board
+ *
+ * A Eiota_Board holds @ref Eiotas_Particle received.
+ * When two @ref Eiotas_Particle with the same link_value exists, they are merged together
+ * and delivered to user code through Eiotas_Receive_Particle callback.
+ *
+ * @{
+ */
+
+/**
  * @brief Free allocated resources.
  *
- * @param board The Eiotas_Board to free.
+ * @param board The @ref Eiotas_Board to free.
  *
  * This function will free all it's user data using user_bits ... FIXME
  */
@@ -54,13 +64,17 @@ void eiotas_board_free(Eiotas_Board *board);
  * @brief Allocate the resources.
  *
  * @param name The name of this door.
- * @param parent The direct hierarchical parent Eiotas_Room.
+ * @param parent The direct hierarchical parent @ref Eiotas_Room.
  * @param user_bits A Eiotas_User_Bits initilized with user side pointers.
  *
- * @return the new allocated Eiotas_Board @c NULL on failure
+ * @return the new allocated @ref Eiotas_Board @c NULL on failure
  *
  * @see Eiotas_User_Bits
  */
 EAPI Eiotas_Board*  eiotas_board_add(const char* name, Eiotas_Room *parent, Eiotas_User_Bits *user_bits);
+
+/**
+ * @}
+ */
 
 #endif // __EIOTAS_BOARD_H__

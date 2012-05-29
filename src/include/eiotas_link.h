@@ -21,22 +21,34 @@
 
 /**
  * @typedef Eiotas_Link
- * Type for a Link between Eiotas_Iotas.
+ * Type for a Link between @ref Eiotas_Iota.
  */
 typedef struct _Eiotas_Link Eiotas_Link;
 
 /**
  * @struct _Eiotas_Link
- * Struct for a Link between Eiotas_Iotas.
+ * Struct for a Link between @ref Eiotas_Iota.
  */
 struct _Eiotas_Link {
 };
 
 /**
+ * @defgroup Eiotas_Link Eiotas_Link
+ *
+ * A Eiota_Link allows to apply a destination list to a @ref Eiotas_Particle with no defined destination.
+ *
+ * @{
+ */
+
+/**
  * @brief Free allocated resources.
  *
- * @param link The Eiotas_Link to free.
+ * @param link The @ref Eiotas_Link to free.
  */
 void eiotas_link_free(Eiotas_Link *link);
+
+/**
+ * @}
+ */
 
 #endif // __EIOTAS_LINK_H__

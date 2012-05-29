@@ -23,18 +23,30 @@
 
 /**
  * @typedef Eiotas_Version
- * The version of Eiotas.
+ * Type for the version of Eiotas.
  */
-typedef struct _Eiotas_Version
+typedef struct _Eiotas_Version Eiotas_Version;
+
+/**
+ * @struct _Eiotas_Version
+ * Struct version of Eiotas.
+ */
+struct _Eiotas_Version
 {
    int major;    /**< Major component of the version */
    int minor;    /**< Minor component of the version */
    int micro;    /**< Micro component of the version */
-} Eiotas_Version;
+};
 
 EAPI extern Eiotas_Version *eiotas_version;
 
 EAPI extern int _eiotas_log_dom;
+
+/**
+ * @defgroup Eiotas_Main Eiotas
+ *
+ * @{
+ */
 
 /**
  * @brief Initialize the Eiotas library.
@@ -66,5 +78,9 @@ EAPI int eiotas_init();
  * eiotas_init() again to use the Eiotas functions again.
  */
 EAPI int eiotas_shutdown();
+
+/**
+ * @}
+ */
 
 #endif // __EIOTAS_MAIN_H__

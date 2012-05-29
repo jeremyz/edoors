@@ -41,9 +41,19 @@ struct _Eiotas_Door {
 };
 
 /**
+ * @defgroup Eiotas_Door Eiotas_Door
+ *
+ * A Eiota_Door is the main structure used to interact with user code.
+ * @ref Eiotas_Particle sent to user code are, follower and sent releaseed
+ * through eiotas_spin_release_particle if not cprrectly managed by user code.
+ *
+ * @{
+ */
+
+/**
  * @brief Free allocated resources.
  *
- * @param door The Eiotas_Door to free.
+ * @param door The @ref Eiotas_Door to free.
  *
  * This function will free all it's user data using user_bits ... FIXME
  */
@@ -53,13 +63,17 @@ void eiotas_door_free(Eiotas_Door *door);
  * @brief Allocate the resources.
  *
  * @param name The name of this door.
- * @param parent The direct hierarchical parent Eiotas_Room.
+ * @param parent The direct hierarchical parent @ref Eiotas_Room.
  * @param user_bits A Eiotas_User_Bits initilized with user side pointers.
  *
- * @return the new allocated Eiotas_Door @c NULL on failure
+ * @return the new allocated @ref Eiotas_Door @c NULL on failure
  *
  * @see Eiotas_User_Bits
  */
 EAPI Eiotas_Door*   eiotas_door_add(const char* name, Eiotas_Room *parent, Eiotas_User_Bits *user_bits);
+
+/**
+ * @}
+ */
 
 #endif // __EIOTAS_DOOR_H__

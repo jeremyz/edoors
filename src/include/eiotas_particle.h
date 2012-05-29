@@ -50,52 +50,64 @@ struct _Eiotas_Particle {
 };
 
 /**
+ * @defgroup Eiotas_Particle Eiotas_Particle
+ *
+ * The central part of Eiotas. The Particle holds, the data, the destination list.
+ *
+ * @{
+ */
+
+/**
  * @brief Free allocated resources.
  *
- * @param particle The Eiotas_Particle to free.
+ * @param particle The @ref Eiotas_Particle to free.
  *
- * This function will free all the merged Eiotas_Particle
+ * This function will free all the merged @ref Eiotas_Particle
  */
 void eiotas_particle_free(Eiotas_Particle *particle);
 
 /**
  * @brief Allocate the resources.
  *
- * @return the new allocated Eiotas_Particle @c NULL on failure
+ * @return the new allocated @ref Eiotas_Particle @c NULL on failure
  */
 Eiotas_Particle* eiotas_particle_alloc();
 
 /**
- * @brief Reset the Eiotas_Particle so that it can be required later.
+ * @brief Reset the @ref Eiotas_Particle so that it can be required later.
  *
- * @param particle The Eiotas_Particle to reset
+ * @param particle The @ref Eiotas_Particle to reset
  */
 EAPI void eiotas_particle_reset(Eiotas_Particle *particle);
 
 /**
  * @brief Set @c src and @c ts timestamp.
  *
- * @param particle The Eiotas_Particle to init
- * @param iota The Eiotas_Iota wich will be set as @c src
+ * @param particle The @ref Eiotas_Particle to init
+ * @param iota The @ref Eiotas_Iota wich will be set as @c src
  */
 EAPI void eiotas_particle_init(Eiotas_Particle *particle, Eiotas_Iota *iota);
 
 /**
  * @brief Merge a particle into the other.
  *
- * @param particle The Eiotas_Particle to hold @p p
- * @param p The Eiotas_Particle to be merged into @p particle
+ * @param particle The @ref Eiotas_Particle to hold @p p
+ * @param p The @ref Eiotas_Particle to be merged into @p particle
  */
 EAPI void eiotas_particle_merge(Eiotas_Particle *particle, Eiotas_Particle *p);
 
 /**
- * @brief Add destinations to the Eiotas_Particle
+ * @brief Add destinations to the @ref Eiotas_Particle
  *
- * @param particle The Eiotas_Particle to add destinations to
+ * @param particle The @ref Eiotas_Particle to add destinations to
  * @param destinations A comma separated list of destination "/room0/room1/.../doorx?action"
  *
- * This function will append each destination found to the destination list of the Eiotas_Particle.
+ * This function will append each destination found to the destination list of the @ref Eiotas_Particle.
  */
 EAPI void eiotas_particle_add_destinations(Eiotas_Particle *particle, char* destinations);
+
+/**
+ * @}
+ */
 
 #endif // __EIOTAS_PARTICLE_H__
