@@ -41,6 +41,13 @@ function cmake_make() {
     cd ..
 }
 
+function cmake_doc() {
+    cmake_init
+    echo -e " * cmake doc\n" && cd $BUILD_DIR || exit 1
+    make doc || exit 1
+    cd ..
+}
+
 function cmake_exec() {
     cmake_init
     echo -e " * execute tests\n" && $BUILD_DIR/tests/tests || exit 1
@@ -67,6 +74,8 @@ for arg in $@; do
             cmd="cmake_make";;
         x|exec)
             cmd="cmake_exec";;
+        d|doc)
+            cmd="cmake_doc";;
         *)
          echo "unknown command ${arg}" && exit 1
      esac

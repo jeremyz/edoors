@@ -6,6 +6,7 @@ set(EIOTAS_VERSION_MICRO 1)
 set(EIOTAS_VERSION ${EIOTAS_VERSION_MAJOR}.${EIOTAS_VERSION_MINOR}.${EIOTAS_VERSION_MICRO})
 
 set(PACKAGE ${CMAKE_PROJECT_NAME})
+set(PACKAGE_VERSION ${EIOTAS_VERSION_MAJOR}.${EIOTAS_VERSION_MINOR}.${EIOTAS_VERSION_MICRO})
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
 # debug
@@ -43,4 +44,5 @@ include_directories ("${PROJECT_BINARY_DIR}/src/include")
 # subdirectories
 add_subdirectory(src)
 add_subdirectory(tests)
+add_subdirectory(doc)
 
