@@ -38,18 +38,18 @@ Eiotas_Particle* eiotas_particle_alloc()
 void eiotas_particle_free(Eiotas_Particle *particle)
 {
     unsigned int        i;
-    char                *s;
+    Eina_Stringshare    *s;
     Eiotas_Particle     *p;
     Eina_Inlist         *li;
     Eina_Array_Iterator it;
 
     DBG("Particle free 0x%X",PRINTPTR(particle));
 
-    EINA_ARRAY_ITER_NEXT(particle->dsts, i, s, it) free(s);
+    EINA_ARRAY_ITER_NEXT(particle->dsts, i, s, it) eina_stringshare_del(s);
     eina_array_free(particle->dsts);
     eina_hash_free(particle->payload);
     EINA_INLIST_FOREACH_SAFE(particle->merged, li, p) eiotas_particle_free(p);
-    EINA_ARRAY_ITER_NEXT(particle->link_fields, i, s, it) free(s);
+    EINA_ARRAY_ITER_NEXT(particle->link_fields, i, s, it) eina_stringshare_del(s);
     eina_array_free(particle->link_fields);
     if(particle->link_value) eina_stringshare_del(particle->link_value);
 
@@ -59,7 +59,7 @@ void eiotas_particle_free(Eiotas_Particle *particle)
 EAPI void eiotas_particle_reset(Eiotas_Particle *particle)
 {
     unsigned int        i;
-    char                *s;
+    Eina_Stringshare    *s;
     Eiotas_Particle     *p;
     Eina_Inlist         *li;
     Eina_Array_Iterator it;
@@ -67,12 +67,12 @@ EAPI void eiotas_particle_reset(Eiotas_Particle *particle)
     particle->ts = 0;
     particle->src = NULL;
     particle->dst = NULL;
-    EINA_ARRAY_ITER_NEXT(particle->dsts, i, s, it) free(s);
+    EINA_ARRAY_ITER_NEXT(particle->dsts, i, s, it) eina_stringshare_del(s);
     eina_array_clean(particle->dsts);
     eina_hash_free_buckets(particle->payload);
     EINA_INLIST_FOREACH_SAFE(particle->merged, li, p) eiotas_particle_free(p);
     particle->merged = NULL;
-    EINA_ARRAY_ITER_NEXT(particle->link_fields, i, s, it) free(s);
+    EINA_ARRAY_ITER_NEXT(particle->link_fields, i, s, it) eina_stringshare_del(s);
     eina_array_clean(particle->link_fields);
     if(particle->link_value) eina_stringshare_del(particle->link_value);
     particle->link_value = NULL;
