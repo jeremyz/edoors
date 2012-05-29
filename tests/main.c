@@ -105,9 +105,17 @@ int main(int argc, char **argv)
     eiotas_particle_merge(p5,p8);
     eiotas_particle_merge(p5,p9);
 
+    eiotas_particle_add_destinations(p4,"dom0/room0/door0?get");
+    eiotas_particle_add_destinations(p4," dom0/room0/door0?get ");
+    eiotas_particle_add_destinations(p4,"    dom0/room0/door0?get   ");
+    eiotas_particle_add_destinations(p4,"dom0/room0/room1/doorx?get,door?get,dom0/room0/door0?get");
+    eiotas_particle_add_destinations(p4,"  dom0/room0/room1/doorx?get,door?get  ,  dom0/room0/door0?get ");
+    eiotas_particle_add_destinations(p4," , , dom0/room0/room1/doorx?get,door?get  ,,  dom0/room0/door0?get ");
+
     eiotas_release_particle(din0,p4);
 
     eiotas_spin_free(dom0);
+
 
     return eiotas_shutdown();
 }
