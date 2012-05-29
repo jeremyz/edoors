@@ -19,11 +19,24 @@
 #ifndef __EIOTAS_LINK_H__
 #define __EIOTAS_LINK_H__
 
+/**
+ * @typedef Eiotas_Link
+ * Type for a Link between Eiotas_Iotas.
+ */
 typedef struct _Eiotas_Link Eiotas_Link;
 
+/**
+ * @struct _Eiotas_Link
+ * Struct for a Link between Eiotas_Iotas.
+ */
 struct _Eiotas_Link {
 };
 
+/**
+ * @brief Free allocated resources.
+ *
+ * @param link The Eiotas_Link to free.
+ */
 void eiotas_link_free(Eiotas_Link *link);
 
 #endif // __EIOTAS_LINK_H__

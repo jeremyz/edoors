@@ -25,15 +25,41 @@
 
 #include <eina_types.h>
 
+/**
+ * @typedef Eiotas_Door
+ * Type for a basic Door.
+ */
 typedef struct _Eiotas_Door Eiotas_Door;
 
+/**
+ * @struct _Eiotas_Door
+ * Struct for a basic Door.
+ */
 struct _Eiotas_Door {
-    Eiotas_Iota         iota;       /* structural info */
-    Eiotas_User_Bits    user_bits;  /* user bits */
+    Eiotas_Iota         iota;       /**< structural info */
+    Eiotas_User_Bits    user_bits;  /**< user bits */
 };
 
+/**
+ * @brief Free allocated resources.
+ *
+ * @param door The Eiotas_Door to free.
+ *
+ * This function will free all it's user data using user_bits ... FIXME
+ */
 void eiotas_door_free(Eiotas_Door *door);
 
+/**
+ * @brief Allocate the resources.
+ *
+ * @param name The name of this door.
+ * @param parent The direct hierarchical parent Eiotas_Room.
+ * @param user_bits A Eiotas_User_Bits initilized with user side pointers.
+ *
+ * @return the new allocated Eiotas_Door @c NULL on failure
+ *
+ * @see Eiotas_User_Bits
+ */
 EAPI Eiotas_Door*   eiotas_door_add(const char* name, Eiotas_Room *parent, Eiotas_User_Bits *user_bits);
 
 #endif // __EIOTAS_DOOR_H__

@@ -25,16 +25,42 @@
 
 #include <eina_hash.h>
 
+/**
+ * @typedef Eiotas_Board
+ * Type for a Particle Merging Door.
+ */
 typedef struct _Eiotas_Board Eiotas_Board;
 
+/**
+ * @struct _Eiotas_Board
+ * Struct for a Particle Merging Door.
+ */
 struct _Eiotas_Board {
-    Eiotas_Iota         iota;           /* structural info */
-    Eiotas_User_Bits    user_bits;      /* user bits */
-    Eina_Hash           *postponed;     /* TODO Particles */
+    Eiotas_Iota         iota;           /**< structural info */
+    Eiotas_User_Bits    user_bits;      /**< user bits */
+    Eina_Hash           *postponed;     /**< TODO Particles */
 };
 
+/**
+ * @brief Free allocated resources.
+ *
+ * @param board The Eiotas_Board to free.
+ *
+ * This function will free all it's user data using user_bits ... FIXME
+ */
 void eiotas_board_free(Eiotas_Board *board);
 
+/**
+ * @brief Allocate the resources.
+ *
+ * @param name The name of this door.
+ * @param parent The direct hierarchical parent Eiotas_Room.
+ * @param user_bits A Eiotas_User_Bits initilized with user side pointers.
+ *
+ * @return the new allocated Eiotas_Board @c NULL on failure
+ *
+ * @see Eiotas_User_Bits
+ */
 EAPI Eiotas_Board*  eiotas_board_add(const char* name, Eiotas_Room *parent, Eiotas_User_Bits *user_bits);
 
 #endif // __EIOTAS_BOARD_H__

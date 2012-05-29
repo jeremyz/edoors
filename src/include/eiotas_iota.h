@@ -21,6 +21,10 @@
 
 #include <eina_stringshare.h>
 
+/**
+ * @enum _Eiotas_Type
+ * List of available Eiotas_Iota
+ */
 typedef enum _Eiotas_Type
 {
    EIOTAS_TYPE_SPIN=0,
@@ -30,18 +34,37 @@ typedef enum _Eiotas_Type
    EIOTAS_TYPE_COUNT
 } Eiotas_Type;
 
+/**
+ * @typedef Eiotas_Iota
+ * Type for structural and  hierachical info
+ */
 typedef struct _Eiotas_Iota Eiotas_Iota;
 
+/**
+ * @struct _Eiotas_Iota
+ * Struct for structural and  hierachical info.
+ */
 struct _Eiotas_Iota {
-    Eiotas_Type         type;       /* type of the iota */
-    Eiotas_Iota         *spin;      /* top level iota which is a Eiotas_Spin */
-    Eiotas_Iota         *parent;    /* direct parent in the hierarchy */
-    Eina_Stringshare    *name;      /* iota's name */
-    Eina_Stringshare    *path;      /* full path to this iota */
+    Eiotas_Type         type;       /**< type of the iota */
+    Eiotas_Iota         *spin;      /**< top level iota which is a Eiotas_Spin */
+    Eiotas_Iota         *parent;    /**< direct parent in the hierarchy */
+    Eina_Stringshare    *name;      /**< iota's name */
+    Eina_Stringshare    *path;      /**< full path to this Eiotas_Iota */
 };
 
+/**
+ * @brief Print iota information using EINA_LOG_DBG.
+ *
+ * @param iota The Eiotas_Iota to show.
+ */
 EAPI void eiotas_iota_show(Eiotas_Iota *iota);
 
+/**
+ * @brief Free allocated resources.
+ *
+ * @param iota The Eiotas_Iota to free.
+ *
+ */
 void eiotas_iota_free(Eiotas_Iota *iota);
 
 #define eiotas_iota_require_particle(_iota) eiotas_spin_require_particle((Eiotas_Spin*)(_iota)->spin)

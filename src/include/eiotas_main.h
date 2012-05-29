@@ -21,6 +21,10 @@
 
 #include <eina_types.h>
 
+/**
+ * @typedef Eiotas_Version
+ * The version of Eiotas.
+ */
 typedef struct _Eiotas_Version
 {
    int major;    /**< Major component of the version */
@@ -32,8 +36,35 @@ EAPI extern Eiotas_Version *eiotas_version;
 
 EAPI extern int _eiotas_log_dom;
 
+/**
+ * @brief Initialize the Eiotas library.
+ *
+ * @return 1 or greater on success, 0 on error.
+ *
+ * This function sets up all the eiotas modules. It returns 0 on
+ * failure (that is, when one of the module fails to initialize),
+ * otherwise it returns the number of times it has already been
+ * called.
+ *
+ * When Eiotas is not used anymore, call eiotas_shutdown() to shut down
+ * the Eiotaslibrary.
+ */
 EAPI int eiotas_init();
 
+/**
+ * @brief Shut down the Eiotas library.
+ *
+ * @return 0 when all the modules are completely shut down, 1 or
+ * greater otherwise.
+ *
+ * This function shuts down the Eiotas library. It returns 0 when it has
+ * been called the same number of times than eiotas_init(). In that case
+ * it shut down all the Eiotas modules.
+ *
+ * Once this function succeeds (that is, @c 0 is returned), you must
+ * not call any of the Eiotas function anymore. You must call
+ * eiotas_init() again to use the Eiotas functions again.
+ */
 EAPI int eiotas_shutdown();
 
 #endif // __EIOTAS_MAIN_H__

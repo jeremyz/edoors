@@ -23,16 +23,41 @@
 
 #include <eina_hash.h>
 
+/**
+ * @typedef Eiotas_Room
+ * Type for a Room, which holds other child Eiotas_Iotas.
+ */
 typedef struct _Eiotas_Room Eiotas_Room;
 
+/**
+ * @struct _Eiotas_Room
+ * Struct for a Room, which holds other child Eiotas_Iotas.
+ */
 struct _Eiotas_Room {
-    Eiotas_Iota     iota;       /* structural info */
-    Eina_Hash       *links;     /* TODO */
-    Eina_Hash       *children;  /* stringshared values optimized hash table holding Rooms, Doors and Boards */
+    Eiotas_Iota     iota;       /**< Eiotas_Iota structural info */
+    Eina_Hash       *links;     /**< TODO */
+    Eina_Hash       *children;  /**< stringshared values optimized hash table holding Eiotas_Iotas */
 };
 
+/**
+ * @brief Free allocated resources.
+ *
+ * @param room The Eiotas_Room to free.
+ *
+ * This function will free all it's child Eiotas_Iotas.
+ */
 void eiotas_room_free(Eiotas_Room *room);
 
+/**
+ * @brief Print iota information using EINA_LOG_DBG.
+ *
+ * @param name The name of this Eiotas_Iota.
+ * @param parent The direct hierarchical parent Eiotas_Room.
+ *
+ * @return the new Eiotas_Room, @c NULL on failure
+ *
+ * This function will register the new room as a child of it's parent Eiotas_Room.
+ */
 EAPI Eiotas_Room*   eiotas_room_add(const char* name, Eiotas_Room *parent);
 
 #endif // __EIOTAS_ROOM_H__
