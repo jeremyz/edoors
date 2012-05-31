@@ -116,6 +116,16 @@ EAPI void eiotas_particle_destinations_add(Eiotas_Particle *particle, const char
 EAPI void eiotas_particle_link_fields_set(Eiotas_Particle *particle, const char *link_fields);
 
 /**
+ * @brief Restore the data associated to a given key
+ *
+ * @param particle The @ref Eiotas_Particle to restore data from
+ * @param key The @ref Eina_Hash key
+ *
+ * @return The data stored on success, NULL otherwise.
+ */
+EAPI const char* eiotas_particle_data_get(Eiotas_Particle *particle, const char *key);
+
+/**
  * @}
  */
 

@@ -29,7 +29,7 @@ Eiotas_Particle* eiotas_particle_alloc()
     particle->src = NULL;
     particle->dst = NULL;
     particle->dsts = eina_array_new(EIOTAS_PARTICLE_ARRAY_STEP);
-    particle->payload = eina_hash_string_small_new(NULL);           // TODO data delete function
+    particle->payload = eina_hash_string_small_new((Eina_Free_Cb)&eina_stringshare_del);
     particle->merged = NULL;
     particle->link_fields = eina_array_new(EIOTAS_PARTICLE_ARRAY_STEP);
     particle->link_value = NULL;
@@ -145,6 +145,11 @@ EAPI void eiotas_particle_link_fields_set(Eiotas_Particle *particle, const char 
         field = sep+1;
     }
     update_link_value(particle,NULL);
+}
+
+EAPI const char* eiotas_particle_data_get(Eiotas_Particle *particle, const char* key)
+{
+    return eina_hash_find(particle->payload,key);
 }
 
 static void update_link_value(Eiotas_Particle *particle, const char *field)
