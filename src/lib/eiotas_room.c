@@ -19,7 +19,7 @@
 #include "eiotas_room.h"
 #include "eiotas_private.h"
 
-EAPI Eiotas_Room* eiotas_room_add(const char* name, Eiotas_Room *parent)
+EAPI Eiotas_Room* eiotas_room_add(const char* name, const Eiotas_Room *parent)
 {
     CHECK_PARENT();
 

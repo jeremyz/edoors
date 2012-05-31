@@ -71,7 +71,7 @@ void eiotas_board_free(Eiotas_Board *board);
  *
  * @see Eiotas_User_Bits
  */
-EAPI Eiotas_Board*  eiotas_board_add(const char* name, Eiotas_Room *parent, Eiotas_User_Bits *user_bits);
+EAPI Eiotas_Board*  eiotas_board_add(const char* name, const Eiotas_Room *parent, Eiotas_User_Bits *user_bits);
 
 /**
  * @}

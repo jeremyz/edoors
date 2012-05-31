@@ -84,18 +84,18 @@ EAPI void eiotas_particle_init(Eiotas_Particle *particle, Eiotas_Iota *iota)
     particle->ts = time(NULL);
 }
 
-EAPI void eiotas_particle_merge(Eiotas_Particle *particle, Eiotas_Particle *p)
+EAPI void eiotas_particle_merge(Eiotas_Particle *particle, const Eiotas_Particle *p)
 {
-    particle->merged = eina_inlist_append(particle->merged, EINA_INLIST_GET(p));
+    particle->merged = eina_inlist_append(particle->merged, EINA_INLIST_GET((Eiotas_Particle*)p));
 }
 
-EAPI void eiotas_particle_add_destinations(Eiotas_Particle *particle, char* destinations)
+EAPI void eiotas_particle_add_destinations(Eiotas_Particle *particle, const char* destinations)
 {
     int n;
     char *dst, *sep;
     Eina_Stringshare *shared;
 
-    dst = destinations;
+    dst = (char*)destinations;
     for(; *dst;) {
         for(; *dst==' '; dst++) /* eat leading spaces */;
         sep = dst;

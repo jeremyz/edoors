@@ -70,7 +70,7 @@ void eiotas_door_free(Eiotas_Door *door);
  *
  * @see Eiotas_User_Bits
  */
-EAPI Eiotas_Door*   eiotas_door_add(const char* name, Eiotas_Room *parent, Eiotas_User_Bits *user_bits);
+EAPI Eiotas_Door*   eiotas_door_add(const char* name, const Eiotas_Room *parent, Eiotas_User_Bits *user_bits);
 
 /**
  * @}

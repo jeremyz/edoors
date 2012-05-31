@@ -80,12 +80,12 @@ EAPI void eiotas_spin_release_particle(Eiotas_Spin *spin, Eiotas_Particle *parti
     eina_array_push(spin->free_particles,particle);
 }
 
-EAPI void eiotas_spin_send_particle(Eiotas_Spin *spin, Eiotas_Particle *particle, Eina_Bool system)
+EAPI void eiotas_spin_send_particle(Eiotas_Spin *spin, const Eiotas_Particle *particle, Eina_Bool system)
 {
     if(system) {
-        spin->sys_fifo = eina_inlist_append(spin->sys_fifo,EINA_INLIST_GET(particle));
+        spin->sys_fifo = eina_inlist_append(spin->sys_fifo,EINA_INLIST_GET((Eiotas_Particle*)particle));
     } else {
-        spin->app_fifo = eina_inlist_append(spin->app_fifo,EINA_INLIST_GET(particle));
+        spin->app_fifo = eina_inlist_append(spin->app_fifo,EINA_INLIST_GET((Eiotas_Particle*)particle));
     }
 }
 

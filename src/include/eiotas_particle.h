@@ -89,12 +89,12 @@ EAPI void eiotas_particle_reset(Eiotas_Particle *particle);
 EAPI void eiotas_particle_init(Eiotas_Particle *particle, Eiotas_Iota *iota);
 
 /**
- * @brief Merge a particle into the other.
+ * @brief Merge a @ref Eiotas_Particle into the other.
  *
  * @param particle The @ref Eiotas_Particle to hold @p p
  * @param p The @ref Eiotas_Particle to be merged into @p particle
  */
-EAPI void eiotas_particle_merge(Eiotas_Particle *particle, Eiotas_Particle *p);
+EAPI void eiotas_particle_merge(Eiotas_Particle *particle, const Eiotas_Particle *p);
 
 /**
  * @brief Add destinations to the @ref Eiotas_Particle
@@ -104,7 +104,7 @@ EAPI void eiotas_particle_merge(Eiotas_Particle *particle, Eiotas_Particle *p);
  *
  * This function will append each destination found to the destination list of the @ref Eiotas_Particle.
  */
-EAPI void eiotas_particle_add_destinations(Eiotas_Particle *particle, char* destinations);
+EAPI void eiotas_particle_add_destinations(Eiotas_Particle *particle, const char* destinations);
 
 /**
  * @}

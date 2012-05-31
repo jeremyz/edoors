@@ -106,7 +106,7 @@ EAPI void               eiotas_spin_release_particle(Eiotas_Spin *spin, Eiotas_P
  * @param system Post to the system fifo us true, otherwise to the application fifo.
  *
  */
-EAPI void               eiotas_spin_send_particle(Eiotas_Spin *spin, Eiotas_Particle *particle, Eina_Bool system);
+EAPI void               eiotas_spin_send_particle(Eiotas_Spin *spin, const Eiotas_Particle *particle, Eina_Bool system);
 
 /**
  * @brief Require a @ref Eiotas_Particle from the free list.

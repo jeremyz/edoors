@@ -66,7 +66,7 @@ void eiotas_room_free(Eiotas_Room *room);
  *
  * This function will register the new room as a child of it's parent @ref Eiotas_Room.
  */
-EAPI Eiotas_Room*   eiotas_room_add(const char* name, Eiotas_Room *parent);
+EAPI Eiotas_Room*   eiotas_room_add(const char* name, const Eiotas_Room *parent);
 
 /**
  * @}
