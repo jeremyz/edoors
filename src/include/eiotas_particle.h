@@ -119,7 +119,7 @@ EAPI void eiotas_particle_link_fields_set(Eiotas_Particle *particle, const char 
  * @brief Restore the data associated to a given key
  *
  * @param particle The @ref Eiotas_Particle to restore data from
- * @param key The @ref Eina_Hash key
+ * @param key The Eina_Hash key
  *
  * @return The data stored on success, NULL otherwise.
  */
@@ -129,10 +129,10 @@ EAPI const char* eiotas_particle_data_get(Eiotas_Particle *particle, const char 
  * @brief Store a key:value data couple into the Eiotas_Particle
  *
  * @param particle The @ref Eiotas_Particle to store data into
- * @param key The @ref Eina_Hash key
+ * @param key The Eina_Hash key
  * @param value The value to store
  *
- * @return @ref EINA_FALSE if an error occurred, @ref EINA_TRUE otherwise.
+ * @return EINA_FALSE if an error occurred, EINA_TRUE otherwise.
  */
 EAPI Eina_Bool eiotas_particle_data_set(Eiotas_Particle *particle, const char *key, const char *value);
 
@@ -140,9 +140,9 @@ EAPI Eina_Bool eiotas_particle_data_set(Eiotas_Particle *particle, const char *k
  * @brief Delete the data associated to a given key
  *
  * @param particle The @ref Eiotas_Particle to delete data from
- * @param key The @ref Eina_Hash key
+ * @param key The Eina_Hash key
  *
- * @return @ref EINA_FALSE if an error occurred, @ref EINA_TRUE otherwise.
+ * @return EINA_FALSE if an error occurred, EINA_TRUE otherwise.
  */
 EAPI Eina_Bool eiotas_particle_data_del(Eiotas_Particle *particle, const char *key);
 
