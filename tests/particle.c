@@ -58,16 +58,16 @@ void test_particle()
     check_cond((eina_accessor_data_get(acc,4,&p)==EINA_FALSE),"!!!!! eina_accessor_data_get should fail");;
 
 
-    check_cond((p0->link_value==NULL),"!!!!! link_value should be NULL");;
+    check_cond((p0->link_value==NULL),"!!!!! link_value should be NULL");
 
     eiotas_particle_data_set(p0,"key0","val0");
-    check_cond((p0->link_value==NULL),"!!!!! link_value should be NULL");;
+    check_cond((p0->link_value==NULL),"!!!!! link_value should be NULL");
     eiotas_particle_data_set(p0,"key1","val1");
-    check_str((char*)p0->link_value,"val1","!!!!! link_value is wrong");;
+    check_str((char*)p0->link_value,"val1","!!!!! link_value is wrong");
     eiotas_particle_data_set(p0,"key2","val2");
-    check_str((char*)p0->link_value,"val2val1","!!!!! link_value is wrong");;
+    check_str((char*)p0->link_value,"val2val1","!!!!! link_value is wrong");
     eiotas_particle_data_set(p0,"key3","val3");
-    check_str((char*)p0->link_value,"val2val1","!!!!! link_value is wrong");;
+    check_str((char*)p0->link_value,"val2val1","!!!!! link_value is wrong");
 
     if(strcmp(eiotas_particle_data_get(p0,"key0"),"val0")!=0) fprintf(stderr,"ERROR\n");
     if(strcmp(eiotas_particle_data_get(p0,"key1"),"val1")!=0) fprintf(stderr,"ERROR\n");
@@ -76,10 +76,13 @@ void test_particle()
 
     eiotas_particle_data_del(p0,"key0");
     if(eiotas_particle_data_get(p0,"key0")!=NULL) fprintf(stderr,"ERROR\n");
-    check_str((char*)p0->link_value,"val2val1","!!!!! link_value is wrong");;
+    check_str((char*)p0->link_value,"val2val1","!!!!! link_value is wrong");
     eiotas_particle_data_del(p0,"key2");
     if(eiotas_particle_data_get(p0,"key2")!=NULL) fprintf(stderr,"ERROR\n");
-    check_str((char*)p0->link_value,"val1","!!!!! link_value is wrong");;
+    check_str((char*)p0->link_value,"val1","!!!!! link_value is wrong");
+    eiotas_particle_data_del(p0,"key1");
+    if(eiotas_particle_data_get(p0,"key1")!=NULL) fprintf(stderr,"ERROR\n");
+    check_cond((p0->link_value==NULL),"!!!!! link_value should be NULL");
 
     p1 = eiotas_require_particle(dom0);
     p2 = eiotas_require_particle(dom0);
