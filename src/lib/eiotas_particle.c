@@ -177,6 +177,11 @@ EAPI Eina_Bool eiotas_particle_data_del(Eiotas_Particle *particle, const char* k
     return EINA_TRUE;
 }
 
+EAPI Eina_Bool eiotas_particle_match(Eiotas_Particle *particle, const Eiotas_Particle *p)
+{
+    return ( (particle->link_value==p->link_value) ? EINA_TRUE : EINA_FALSE );
+}
+
 static void update_link_value(Eiotas_Particle *particle, const char *field)
 {
     unsigned int        i;

@@ -147,6 +147,16 @@ EAPI Eina_Bool eiotas_particle_data_set(Eiotas_Particle *particle, const char *k
 EAPI Eina_Bool eiotas_particle_data_del(Eiotas_Particle *particle, const char *key);
 
 /**
+ * @brief Check if two @ref Eiotas_Particle have the same lnk_value
+ *
+ * @param particle The @ref Eiotas_Particle to compare with
+ * @param p The @ref Eiotas_Particle to compare with
+ *
+ * @return EINA_TRUE if the link value is the same, EINA_FALSE otherwise.
+ */
+EAPI Eina_Bool eiotas_particle_match(Eiotas_Particle *particle, const Eiotas_Particle *p);
+
+/**
  * @}
  */
 
