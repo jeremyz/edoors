@@ -116,6 +116,37 @@ EAPI void eiotas_particle_destinations_add(Eiotas_Particle *particle, const char
     }
 }
 
+EAPI void eiotas_particle_link_fields_set(Eiotas_Particle *particle, const char *link_fields)
+{
+    int                 n;
+    unsigned int        i;
+    Eina_Stringshare    *s;
+    Eina_Array_Iterator it;
+    char *field, *sep;
+
+    EINA_ARRAY_ITER_NEXT(particle->link_fields, i, s, it) eina_stringshare_del(s);
+    eina_array_clean(particle->link_fields);
+
+    field = (char*)link_fields;
+    for(; *field;) {
+        for(; *field==' '; field++) /* eat leading spaces */;
+        sep = field;
+        for(; (*sep && *sep!=EIOTAS_FIELDS_SEP && *sep!=' '); sep++) /* search field end */;
+        n = (sep-field);
+        if(n==0) {
+            ERR("ignore empty field");
+        } else {
+            s = eina_stringshare_add_length(field,n);
+            eina_array_push(particle->link_fields,s);
+            DBG("add field >%s<",s);
+        }
+        for(; (*sep && *sep!=EIOTAS_FIELDS_SEP); sep++) /* eat whatever following */;
+        if(!*sep) return;
+        field = sep+1;
+    }
+    update_link_value(particle,NULL);
+}
+
 static void update_link_value(Eiotas_Particle *particle, const char *field)
 {
     unsigned int        i;

@@ -107,6 +107,15 @@ EAPI void eiotas_particle_merge(Eiotas_Particle *particle, const Eiotas_Particle
 EAPI void eiotas_particle_destinations_add(Eiotas_Particle *particle, const char *destinations);
 
 /**
+ * @brief Set the link fields
+ *
+ * @param particle The @ref Eiotas_Particle to set the link fields to
+ * @param link_fields A comma separated list of fields name
+ *
+ */
+EAPI void eiotas_particle_link_fields_set(Eiotas_Particle *particle, const char *link_fields);
+
+/**
  * @}
  */
 
