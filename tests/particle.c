@@ -77,6 +77,15 @@ void test_particle()
     eiotas_particle_data_del(p0,"key0");
     if(eiotas_particle_data_get(p0,"key0")!=NULL) fprintf(stderr,"ERROR\n");
     check_str((char*)p0->link_value,"val2val1","!!!!! link_value is wrong");
+
+    p1 = eiotas_require_particle(dom0);
+    check_cond(!eiotas_particle_match(p0,p1),"!!!!! link_value is not the same");
+    eiotas_particle_link_fields_set(p1," k0,k1");
+    eiotas_particle_data_set(p1,"k0","val2");
+    eiotas_particle_data_set(p1,"k1","val1");
+    check_str((char*)p1->link_value,"val2val1","!!!!! link_value is wrong");
+    check_cond(eiotas_particle_match(p0,p1),"!!!!! link_value is the same");
+
     eiotas_particle_data_del(p0,"key2");
     if(eiotas_particle_data_get(p0,"key2")!=NULL) fprintf(stderr,"ERROR\n");
     check_str((char*)p0->link_value,"val1","!!!!! link_value is wrong");
@@ -84,7 +93,7 @@ void test_particle()
     if(eiotas_particle_data_get(p0,"key1")!=NULL) fprintf(stderr,"ERROR\n");
     check_cond((p0->link_value==NULL),"!!!!! link_value should be NULL");
 
-    p1 = eiotas_require_particle(dom0);
+
     p2 = eiotas_require_particle(dom0);
     p3 = eiotas_require_particle(dom0);
     p4 = eiotas_require_particle(dom0);
