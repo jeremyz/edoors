@@ -126,6 +126,17 @@ EAPI void eiotas_particle_link_fields_set(Eiotas_Particle *particle, const char 
 EAPI const char* eiotas_particle_data_get(Eiotas_Particle *particle, const char *key);
 
 /**
+ * @brief Store a key:value data couple into the Eiotas_Particle
+ *
+ * @param particle The @ref Eiotas_Particle to store data into
+ * @param key The @ref Eina_Hash key
+ * @param value The value to store
+ *
+ * @return @ref EINA_FALSE if an error occurred, @ref EINA_TRUE otherwise.
+ */
+EAPI Eina_Bool eiotas_particle_data_set(Eiotas_Particle *particle, const char *key, const char *value);
+
+/**
  * @}
  */
 

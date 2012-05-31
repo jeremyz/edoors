@@ -152,6 +152,19 @@ EAPI const char* eiotas_particle_data_get(Eiotas_Particle *particle, const char*
     return eina_hash_find(particle->payload,key);
 }
 
+EAPI Eina_Bool eiotas_particle_data_set(Eiotas_Particle *particle, const char* key, const char* value)
+{
+    unsigned int        i;
+    Eina_Stringshare    *s;
+    Eina_Array_Iterator it;
+
+    s = eina_stringshare_add(value);
+    if(!eina_hash_add(particle->payload,key,s)) return EINA_FALSE;
+    update_link_value(particle,key);
+
+    return EINA_TRUE;
+}
+
 static void update_link_value(Eiotas_Particle *particle, const char *field)
 {
     unsigned int        i;
