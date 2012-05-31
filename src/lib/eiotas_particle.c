@@ -165,6 +165,18 @@ EAPI Eina_Bool eiotas_particle_data_set(Eiotas_Particle *particle, const char* k
     return EINA_TRUE;
 }
 
+EAPI Eina_Bool eiotas_particle_data_del(Eiotas_Particle *particle, const char* key)
+{
+    unsigned int        i;
+    Eina_Stringshare    *s;
+    Eina_Array_Iterator it;
+
+    if(!eina_hash_del(particle->payload,key,NULL)) return EINA_FALSE;
+    update_link_value(particle,key);
+
+    return EINA_TRUE;
+}
+
 static void update_link_value(Eiotas_Particle *particle, const char *field)
 {
     unsigned int        i;

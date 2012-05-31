@@ -137,6 +137,16 @@ EAPI const char* eiotas_particle_data_get(Eiotas_Particle *particle, const char 
 EAPI Eina_Bool eiotas_particle_data_set(Eiotas_Particle *particle, const char *key, const char *value);
 
 /**
+ * @brief Delete the data associated to a given key
+ *
+ * @param particle The @ref Eiotas_Particle to delete data from
+ * @param key The @ref Eina_Hash key
+ *
+ * @return @ref EINA_FALSE if an error occurred, @ref EINA_TRUE otherwise.
+ */
+EAPI Eina_Bool eiotas_particle_data_del(Eiotas_Particle *particle, const char *key);
+
+/**
  * @}
  */
 
