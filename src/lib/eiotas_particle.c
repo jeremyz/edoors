@@ -180,7 +180,7 @@ EAPI Eina_Bool eiotas_particle_data_del(Eiotas_Particle *particle, const char* k
 static void update_link_value(Eiotas_Particle *particle, const char *field)
 {
     unsigned int        i;
-    unsigned int        l;
+    unsigned int        l,t;
     Eina_Stringshare    *k;
     Eina_Stringshare    *v;
     Eina_Array_Iterator it;
@@ -189,6 +189,7 @@ static void update_link_value(Eiotas_Particle *particle, const char *field)
     char                *dst;
 
     if(field!=NULL) {
+        /* check if link_value has to be updated */
         update = EINA_FALSE;
         EINA_ARRAY_ITER_NEXT(particle->link_fields, i, k, it) {
             if(strcmp(field,k)==0) {
@@ -199,18 +200,24 @@ static void update_link_value(Eiotas_Particle *particle, const char *field)
         if(!update) return;
     }
 
-    if(particle->link_value) eina_stringshare_del(particle->link_value);
-
+    t = 1;
     dst = tmp;
     EINA_ARRAY_ITER_NEXT(particle->link_fields, i, k, it) {
         v = eina_hash_find(particle->payload,k);
         if(v!=NULL) {
             l = strlen(v);
-            strcpy(dst,v);
+            t += l;
+            if(t>EIOTAS_MAX_VALUE_LENGTH) {
+                ERR("buffer overflow (%d>%d) link_value untouched",t,EIOTAS_MAX_VALUE_LENGTH);
+                return;
+            }
+            memcpy(dst,v,l);
             dst += l;
         }
     }
     *dst='\0';
-    particle->link_value = eina_stringshare_add(tmp);
+
+    if(particle->link_value) eina_stringshare_del(particle->link_value);
+    particle->link_value = ( (t==1) ? NULL : eina_stringshare_add(tmp) );
 }
 
