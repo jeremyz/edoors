@@ -19,6 +19,8 @@
 #include "eiotas_particle.h"
 #include "eiotas_private.h"
 
+static void update_link_value(Eiotas_Particle *particle, const char *field);
+
 Eiotas_Particle* eiotas_particle_alloc()
 {
     BUILD_INSTANCE(Eiotas_Particle,particle);
@@ -110,7 +112,44 @@ EAPI void eiotas_particle_destinations_add(Eiotas_Particle *particle, const char
         }
         for(; (*sep && *sep!=EIOTAS_FIELDS_SEP); sep++) /* eat whatever following */;
         if(!*sep) return;
-        dst=sep+1;
+        dst = sep+1;
     }
+}
+
+static void update_link_value(Eiotas_Particle *particle, const char *field)
+{
+    unsigned int        i;
+    unsigned int        l;
+    Eina_Stringshare    *k;
+    Eina_Stringshare    *v;
+    Eina_Array_Iterator it;
+    Eina_Bool           update;
+    char                tmp[EIOTAS_MAX_VALUE_LENGTH];
+    char                *dst;
+
+    if(field!=NULL) {
+        update = EINA_FALSE;
+        EINA_ARRAY_ITER_NEXT(particle->link_fields, i, k, it) {
+            if(strcmp(field,k)==0) {
+                update = EINA_TRUE;
+                break;
+            }
+        }
+        if(!update) return;
+    }
+
+    if(particle->link_value) eina_stringshare_del(particle->link_value);
+
+    dst = tmp;
+    EINA_ARRAY_ITER_NEXT(particle->link_fields, i, k, it) {
+        v = eina_hash_find(particle->payload,k);
+        if(v!=NULL) {
+            l = strlen(v);
+            strcpy(dst,v);
+            dst += l;
+        }
+    }
+    *dst='\0';
+    particle->link_value = eina_stringshare_add(tmp);
 }
 
