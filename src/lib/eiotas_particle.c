@@ -89,11 +89,11 @@ EAPI void eiotas_particle_merge(Eiotas_Particle *particle, const Eiotas_Particle
     particle->merged = eina_inlist_append(particle->merged, EINA_INLIST_GET((Eiotas_Particle*)p));
 }
 
-EAPI void eiotas_particle_add_destinations(Eiotas_Particle *particle, const char* destinations)
+EAPI void eiotas_particle_destinations_add(Eiotas_Particle *particle, const char* destinations)
 {
     int n;
     char *dst, *sep;
-    Eina_Stringshare *shared;
+    Eina_Stringshare *s;
 
     dst = (char*)destinations;
     for(; *dst;) {
@@ -104,9 +104,9 @@ EAPI void eiotas_particle_add_destinations(Eiotas_Particle *particle, const char
         if(n==0) {
             ERR("ignore empty destination");
         } else {
-            shared = eina_stringshare_add_length(dst,n);
-            eina_array_push(particle->dsts,shared);
-            DBG("add dst >%s<",shared);
+            s = eina_stringshare_add_length(dst,n);
+            eina_array_push(particle->dsts,s);
+            DBG("add dst >%s<",s);
         }
         for(; (*sep && *sep!=EIOTAS_FIELDS_SEP); sep++) /* eat whatever following */;
         if(!*sep) return;

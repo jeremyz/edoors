@@ -104,7 +104,7 @@ EAPI void eiotas_particle_merge(Eiotas_Particle *particle, const Eiotas_Particle
  *
  * This function will append each destination found to the destination list of the @ref Eiotas_Particle.
  */
-EAPI void eiotas_particle_add_destinations(Eiotas_Particle *particle, const char* destinations);
+EAPI void eiotas_particle_destinations_add(Eiotas_Particle *particle, const char *destinations);
 
 /**
  * @}
