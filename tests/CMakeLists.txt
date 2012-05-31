@@ -1,5 +1,9 @@
 LIST(APPEND TESTS_CC_SOURCES
    main.c
+   helper.c
+   spin.c
+   particle.c
+   user_door.c
    )
 
 include_directories(
