@@ -117,6 +117,8 @@ EAPI void eiotas_particle_destinations_add(Eiotas_Particle *particle, const char
 
 static Eina_Bool add_destination(Eiotas_Particle *particle, const char *dst, int n)
 {
+    int i, c;
+    char *tmp;
     Eina_Stringshare *s;
 
     if(n==0) {
@@ -129,6 +131,20 @@ static Eina_Bool add_destination(Eiotas_Particle *particle, const char *dst, int
     }
     if(dst[n-1]==EIOTAS_ACTION_SEP || dst[n-1]==EIOTAS_PATH_SEP ) {
         ERR("ignore destination ending with '%c' ",dst[n-1]);
+        return EINA_FALSE;
+    }
+
+    for(tmp=(char*)dst, c=0, i=0; i<n; i++, tmp++) {
+        if(*tmp==EIOTAS_ACTION_SEP) {
+            if(*(tmp-1)==EIOTAS_PATH_SEP) {
+                ERR("ignore destination with '%c%c' ",EIOTAS_PATH_SEP,EIOTAS_ACTION_SEP);
+                return EINA_FALSE;
+            }
+            c++;
+        }
+    }
+    if(c>1) {
+        ERR("ignore destination with more then 1 '%c' ",EIOTAS_ACTION_SEP);
         return EINA_FALSE;
     }
 

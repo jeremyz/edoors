@@ -20,7 +20,7 @@ void test_particle()
     eiotas_particle_destinations_add(p0,"dom0/room0/room1/doorx?get,door?get,dom0/room0/door0?get");
     eiotas_particle_destinations_add(p0,"  dom0/room0/room1/doorx?get,door?get  ,  dom0/room0/door0?get ");
     eiotas_particle_destinations_add(p0," dom0/room0/room1/doorx?get,door?get, dom0/room0/door0?get ");
-    eiotas_particle_destinations_add(p0," /suffix, ?suffix, prefix/ , prefix? , ,,  ");
+    eiotas_particle_destinations_add(p0," /suffix, ?suffix, prefix/ , prefix? , ,,  very/?wrong , very?wrong?too");
 
     acc = eina_array_accessor_new(p0->dsts);
     eina_accessor_data_get(acc,0,&p);
