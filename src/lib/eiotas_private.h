@@ -36,6 +36,7 @@
 
 #define EIOTAS_PATH_SEP '/'
 #define EIOTAS_FIELDS_SEP ','
+#define EIOTAS_ACTION_SEP '?'
 #define EIOTAS_PARTICLE_ARRAY_STEP 3
 
 void eiotas_iota_desinit(Eiotas_Iota *iota);
