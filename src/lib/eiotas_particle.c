@@ -229,7 +229,18 @@ static void update_link_value(Eiotas_Particle *particle, const char *field)
     }
     *dst='\0';
 
-    if(particle->link_value) eina_stringshare_del(particle->link_value);
-    particle->link_value = ( (t==1) ? NULL : eina_stringshare_add(tmp) );
+    if(particle->link_value) {
+        if(t==1) {
+            eina_stringshare_del(particle->link_value);
+            particle->link_value = NULL;
+        } else if(strcmp(particle->link_value,tmp)!=0) {
+            eina_stringshare_del(particle->link_value);
+            particle->link_value = eina_stringshare_add(tmp);
+        }
+        /* else : keep the same stringshare */
+    } else if(t!=1) {
+        particle->link_value = eina_stringshare_add(tmp);
+    }
+    /* else : keep particle->link_value=NULL*/
 }
 
