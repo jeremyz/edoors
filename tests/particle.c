@@ -11,7 +11,10 @@ void test_particle()
 
     p0 = eiotas_require_particle(dom0);
 
+    check_cond(!eiotas_particle_has_dst(p0),"should be no destination");
+
     eiotas_particle_destinations_add(p0,"dom0/room0/door0?get");
+    check_cond(eiotas_particle_has_dst(p0),"should be a destination");
     eiotas_particle_destinations_add(p0," dom0/room0/door0?get ");
     eiotas_particle_destinations_add(p0,"    dom0/room0/door0?get   ");
     eiotas_particle_destinations_add(p0,"dom0/room0/room1/doorx?get,door?get,dom0/room0/door0?get");

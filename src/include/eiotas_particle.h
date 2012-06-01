@@ -43,6 +43,7 @@ struct _Eiotas_Particle {
     Eiotas_Iota         *src;           /**< where it's born */
     Eiotas_Iota         *dst;           /**< current destination */
     Eina_Array          *dsts;          /**< array of destinatinon strings */
+    unsigned int        cur_dst;        /**< current destination index */
     Eina_Hash           *payload;       /**< string data carried by this particle */
     Eina_Inlist         *merged;        /**< list of merged particles */
     Eina_Array          *link_fields;   /**< fields used to generate the link value */
@@ -97,6 +98,15 @@ EAPI void eiotas_particle_init(Eiotas_Particle *particle, Eiotas_Iota *iota);
 EAPI void eiotas_particle_merge(Eiotas_Particle *particle, const Eiotas_Particle *p);
 
 /**
+ * @brief Check if a current destination is defined
+ *
+ * @param particle The @ref Eiotas_Particle to check
+ *
+ * @return EINA_TRUE if a current destination is defined, EINA_FALSE otherwise.
+ */
+EAPI Eina_Bool eiotas_particle_has_dst(Eiotas_Particle *particle);
+
+/**
  * @brief Add destinations to the @ref Eiotas_Particle
  *
  * @param particle The @ref Eiotas_Particle to add destinations to
@@ -147,7 +157,7 @@ EAPI Eina_Bool eiotas_particle_data_set(Eiotas_Particle *particle, const char *k
 EAPI Eina_Bool eiotas_particle_data_del(Eiotas_Particle *particle, const char *key);
 
 /**
- * @brief Check if two @ref Eiotas_Particle have the same lnk_value
+ * @brief Check if two @ref Eiotas_Particle have the same link_value
  *
  * @param particle The @ref Eiotas_Particle to compare with
  * @param p The @ref Eiotas_Particle to compare with

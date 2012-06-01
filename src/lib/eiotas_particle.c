@@ -33,6 +33,7 @@ Eiotas_Particle* eiotas_particle_alloc()
     particle->merged = NULL;
     particle->link_fields = eina_array_new(EIOTAS_PARTICLE_ARRAY_STEP);
     particle->link_value = NULL;
+    particle->cur_dst = 0;
 
     return particle;
 }
@@ -89,6 +90,12 @@ EAPI void eiotas_particle_init(Eiotas_Particle *particle, Eiotas_Iota *iota)
 EAPI void eiotas_particle_merge(Eiotas_Particle *particle, const Eiotas_Particle *p)
 {
     particle->merged = eina_inlist_append(particle->merged, EINA_INLIST_GET((Eiotas_Particle*)p));
+}
+
+EAPI Eina_Bool eiotas_particle_has_dst(Eiotas_Particle *particle)
+{
+    if(eina_array_count_get(particle->dsts)<=particle->cur_dst) return EINA_FALSE;
+    return ( (eina_array_data_get(particle->dsts,particle->cur_dst)==NULL) ? EINA_FALSE : EINA_TRUE );
 }
 
 EAPI void eiotas_particle_destinations_add(Eiotas_Particle *particle, const char* destinations)
