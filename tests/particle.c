@@ -97,6 +97,39 @@ void test_particle()
     if(eiotas_particle_data_get(p0,"key1")!=NULL) fprintf(stderr,"ERROR\n");
     check_cond((p0->link_value==NULL),"link_value should be NULL");
 
+    eiotas_particle_destinations_add(p2,"door");
+    eiotas_particle_split_dst(p2);
+    check_cond((p2->cur_room==NULL),"room must be NULL");
+    check_str((char*)p2->cur_door,"door","door is wrong");
+    check_cond((p2->cur_action==NULL),"action must be NULL");
+
+    eiotas_particle_next_dst(p2);
+    eiotas_particle_destinations_add(p2,"door?get");
+    eiotas_particle_split_dst(p2);
+    check_str((char*)p2->cur_action,"get","action is wrong");
+    check_str((char*)p2->cur_door,"door","door is wrong");
+    check_cond((p2->cur_room==NULL),"room must be NULL");
+
+    eiotas_particle_next_dst(p2);
+    eiotas_particle_destinations_add(p2,"room/room/door");
+    eiotas_particle_split_dst(p2);
+    check_cond((p2->cur_action==NULL),"action must be NULL");
+    check_str((char*)p2->cur_door,"door","door is wrong");
+    check_str((char*)p2->cur_room,"room/room","room is wrong");
+
+    eiotas_particle_next_dst(p2);
+    eiotas_particle_destinations_add(p2,"room/room/door?get");
+    eiotas_particle_split_dst(p2);
+    check_str((char*)p2->cur_action,"get","action is wrong");
+    check_str((char*)p2->cur_door,"door","door is wrong");
+    check_str((char*)p2->cur_room,"room/room","room is wrong");
+
+    eiotas_particle_next_dst(p2);
+    eiotas_particle_destinations_add(p2,"room/room/door?get");
+    eiotas_particle_split_dst(p2);
+    check_str((char*)p2->cur_action,"get","action is wrong");
+    check_str((char*)p2->cur_door,"door","door is wrong");
+    check_str((char*)p2->cur_room,"room/room","room is wrong");
 
     p2 = eiotas_require_particle(dom0);
     p3 = eiotas_require_particle(dom0);
