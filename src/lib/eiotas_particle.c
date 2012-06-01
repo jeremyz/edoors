@@ -116,6 +116,83 @@ EAPI Eina_Bool eiotas_particle_next_dst(Eiotas_Particle *particle)
     return ( (eina_array_count_get(particle->dsts)>particle->cur_dst) ? EINA_TRUE : EINA_FALSE );
 }
 
+EAPI void eiotas_particle_split_dst(Eiotas_Particle *particle)
+{
+    unsigned int l, n;
+    char *sep, *tmp;
+    Eina_Stringshare *dst;
+
+    if(!eiotas_particle_has_dst(particle)) {
+        if(particle->cur_room) eina_stringshare_del(particle->cur_room);
+        if(particle->cur_door) eina_stringshare_del(particle->cur_door);
+        if(particle->cur_action) eina_stringshare_del(particle->cur_action);
+        particle->cur_room = particle->cur_door = particle->cur_action =  NULL;
+        return;
+    }
+
+    dst = eina_array_data_get(particle->dsts,particle->cur_dst);
+    l = eina_stringshare_strlen(dst);
+
+    sep = (char*)dst+l-1;
+    for(; (sep!=dst && *sep!=EIOTAS_ACTION_SEP ); sep--) /* reverse search for action separator */;
+
+    if(*sep==EIOTAS_ACTION_SEP) {
+        tmp = sep+1;
+        /* action defined */
+        if(particle->cur_action) {
+            if(strcmp(particle->cur_action,tmp)!=0) {
+                eina_stringshare_del(particle->cur_action);
+                particle->cur_action = eina_stringshare_add(tmp);
+            }
+            /* else : keep the same stringshare */
+        } else {
+            particle->cur_action = eina_stringshare_add(tmp);
+        }
+        tmp = sep;
+        sep = sep-1;
+    } else {
+        if(particle->cur_action) {
+            eina_stringshare_del(particle->cur_action);
+            particle->cur_action = NULL;
+        }
+        tmp = (char*)dst+l;
+        sep = (char*)dst+l-1;
+    }
+
+    for(; (sep!=dst && *sep!=EIOTAS_PATH_SEP ); sep--) /* reverse search path for separator */;
+
+    if(sep==dst) {
+        /* no room */
+        n=(tmp-sep);
+        if(particle->cur_room) eina_stringshare_del(particle->cur_room);
+        particle->cur_room = NULL;
+    } else {
+        n=(sep-dst);
+        /* door defined */
+        if(particle->cur_room) {
+            if(strncmp(particle->cur_room,dst,n)!=0) {
+                eina_stringshare_del(particle->cur_room);
+                particle->cur_room = eina_stringshare_add_length(dst,n);
+            }
+            /* else : keep the same stringshare */
+        } else {
+            particle->cur_room = eina_stringshare_add_length(dst,n);
+        }
+        n=(tmp-sep-1);
+        sep++;
+    }
+    /* door defined */
+    if(particle->cur_door) {
+        if(strncmp(particle->cur_door,sep,n)!=0) {
+            eina_stringshare_del(particle->cur_door);
+            particle->cur_door = eina_stringshare_add_length(sep,n);
+        }
+        /* else : keep the same stringshare */
+    } else {
+        particle->cur_door = eina_stringshare_add_length(sep,n);
+    }
+}
+
 EAPI void eiotas_particle_destinations_add(Eiotas_Particle *particle, const char* destinations)
 {
     char *dst, *sep;

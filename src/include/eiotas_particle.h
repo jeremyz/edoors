@@ -119,6 +119,14 @@ EAPI Eina_Bool eiotas_particle_has_dst(Eiotas_Particle *particle);
 EAPI Eina_Bool eiotas_particle_next_dst(Eiotas_Particle *particle);
 
 /**
+ * @brief Split current destination in room ; door ; action Eina_Stringshare
+ *
+ * @param particle The @ref Eiotas_Particle to split current destination
+ *
+ */
+EAPI void eiotas_particle_split_dst(Eiotas_Particle *particle);
+
+/**
  * @brief Add destinations to the @ref Eiotas_Particle
  *
  * @param particle The @ref Eiotas_Particle to add destinations to
