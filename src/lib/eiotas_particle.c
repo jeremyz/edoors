@@ -35,6 +35,9 @@ Eiotas_Particle* eiotas_particle_alloc()
     particle->link_fields = eina_array_new(EIOTAS_PARTICLE_ARRAY_STEP);
     particle->link_value = NULL;
     particle->cur_dst = 0;
+    particle->cur_action = NULL;
+    particle->cur_door = NULL;
+    particle->cur_room = NULL;
 
     return particle;
 }
@@ -56,6 +59,9 @@ void eiotas_particle_free(Eiotas_Particle *particle)
     EINA_ARRAY_ITER_NEXT(particle->link_fields, i, s, it) eina_stringshare_del(s);
     eina_array_free(particle->link_fields);
     if(particle->link_value) eina_stringshare_del(particle->link_value);
+    if(particle->cur_action) eina_stringshare_del(particle->cur_action);
+    if(particle->cur_door) eina_stringshare_del(particle->cur_door);
+    if(particle->cur_room) eina_stringshare_del(particle->cur_room);
 
     free(particle);
 }
@@ -80,6 +86,12 @@ EAPI void eiotas_particle_reset(Eiotas_Particle *particle)
     eina_array_clean(particle->link_fields);
     if(particle->link_value) eina_stringshare_del(particle->link_value);
     particle->link_value = NULL;
+    if(particle->cur_action) eina_stringshare_del(particle->cur_action);
+    particle->cur_action = NULL;
+    if(particle->cur_door) eina_stringshare_del(particle->cur_door);
+    particle->cur_door = NULL;
+    if(particle->cur_room) eina_stringshare_del(particle->cur_room);
+    particle->cur_room = NULL;
 }
 
 EAPI void eiotas_particle_init(Eiotas_Particle *particle, Eiotas_Iota *iota)

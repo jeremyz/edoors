@@ -44,6 +44,9 @@ struct _Eiotas_Particle {
     Eiotas_Iota         *dst;           /**< current destination */
     Eina_Array          *dsts;          /**< array of destinatinon strings */
     unsigned int        cur_dst;        /**< current destination index */
+    Eina_Stringshare    *cur_action;    /**< action part of the current destination */
+    Eina_Stringshare    *cur_door;      /**< door part of the current destination */
+    Eina_Stringshare    *cur_room;      /**< room part of the current destination */
     Eina_Hash           *payload;       /**< string data carried by this particle */
     Eina_Inlist         *merged;        /**< list of merged particles */
     Eina_Array          *link_fields;   /**< fields used to generate the link value */
