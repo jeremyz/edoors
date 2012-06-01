@@ -107,6 +107,15 @@ EAPI void eiotas_particle_merge(Eiotas_Particle *particle, const Eiotas_Particle
 EAPI Eina_Bool eiotas_particle_has_dst(Eiotas_Particle *particle);
 
 /**
+ * @brief Point to the next destination
+ *
+ * @param particle The @ref Eiotas_Particle to mofify
+ *
+ * @return EINA_TRUE if next destination is defined, EINA_FALSE otherwise.
+ */
+EAPI Eina_Bool eiotas_particle_next_dst(Eiotas_Particle *particle);
+
+/**
  * @brief Add destinations to the @ref Eiotas_Particle
  *
  * @param particle The @ref Eiotas_Particle to add destinations to

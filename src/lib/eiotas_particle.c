@@ -95,8 +95,13 @@ EAPI void eiotas_particle_merge(Eiotas_Particle *particle, const Eiotas_Particle
 
 EAPI Eina_Bool eiotas_particle_has_dst(Eiotas_Particle *particle)
 {
-    if(eina_array_count_get(particle->dsts)<=particle->cur_dst) return EINA_FALSE;
-    return ( (eina_array_data_get(particle->dsts,particle->cur_dst)==NULL) ? EINA_FALSE : EINA_TRUE );
+    return ( (eina_array_count_get(particle->dsts)>particle->cur_dst) ? EINA_TRUE : EINA_FALSE );
+}
+
+EAPI Eina_Bool eiotas_particle_next_dst(Eiotas_Particle *particle)
+{
+    particle->cur_dst+=1;
+    return ( (eina_array_count_get(particle->dsts)>particle->cur_dst) ? EINA_TRUE : EINA_FALSE );
 }
 
 EAPI void eiotas_particle_destinations_add(Eiotas_Particle *particle, const char* destinations)
