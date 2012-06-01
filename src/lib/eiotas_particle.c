@@ -20,6 +20,7 @@
 #include "eiotas_private.h"
 
 static void update_link_value(Eiotas_Particle *particle, const char *field);
+static Eina_Bool add_destination(Eiotas_Particle *particle, const char *dst, int l);
 
 Eiotas_Particle* eiotas_particle_alloc()
 {
@@ -100,27 +101,42 @@ EAPI Eina_Bool eiotas_particle_has_dst(Eiotas_Particle *particle)
 
 EAPI void eiotas_particle_destinations_add(Eiotas_Particle *particle, const char* destinations)
 {
-    int n;
     char *dst, *sep;
-    Eina_Stringshare *s;
 
     dst = (char*)destinations;
     for(; *dst;) {
         for(; *dst==' '; dst++) /* eat leading spaces */;
         sep = dst;
         for(; (*sep && *sep!=EIOTAS_FIELDS_SEP && *sep!=' '); sep++) /* search destination end */;
-        n = (sep-dst);
-        if(n==0) {
-            ERR("ignore empty destination");
-        } else {
-            s = eina_stringshare_add_length(dst,n);
-            eina_array_push(particle->dsts,s);
-            DBG("add dst >%s<",s);
-        }
+        add_destination(particle,dst,(sep-dst));
         for(; (*sep && *sep!=EIOTAS_FIELDS_SEP); sep++) /* eat whatever following */;
         if(!*sep) return;
         dst = sep+1;
     }
+}
+
+static Eina_Bool add_destination(Eiotas_Particle *particle, const char *dst, int n)
+{
+    Eina_Stringshare *s;
+
+    if(n==0) {
+        ERR("ignore empty destination");
+        return EINA_FALSE;
+    }
+    if(*dst==EIOTAS_ACTION_SEP || *dst==EIOTAS_PATH_SEP ) {
+        ERR("ignore destination starting with '%c' ",*dst);
+        return EINA_FALSE;
+    }
+    if(dst[n-1]==EIOTAS_ACTION_SEP || dst[n-1]==EIOTAS_PATH_SEP ) {
+        ERR("ignore destination ending with '%c' ",dst[n-1]);
+        return EINA_FALSE;
+    }
+
+    s = eina_stringshare_add_length(dst,n);
+    eina_array_push(particle->dsts,s);
+    DBG("add dst >%s<",s);
+
+    return EINA_TRUE;
 }
 
 EAPI void eiotas_particle_link_fields_set(Eiotas_Particle *particle, const char *link_fields)
