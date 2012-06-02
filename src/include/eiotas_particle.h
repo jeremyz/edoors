@@ -127,6 +127,14 @@ EAPI Eina_Bool eiotas_particle_next_dst(Eiotas_Particle *particle);
 EAPI void eiotas_particle_split_dst(Eiotas_Particle *particle);
 
 /**
+ * @brief Add a destination and set it as current
+ *
+ * @param particle The @ref Eiotas_Particle to add destination to
+ * @param destination The destination to add and set as current
+ */
+EAPI void eiotas_particle_destination_set(Eiotas_Particle *particle, const char *destination);
+
+/**
  * @brief Add destinations to the @ref Eiotas_Particle
  *
  * @param particle The @ref Eiotas_Particle to add destinations to

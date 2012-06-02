@@ -185,6 +185,18 @@ EAPI void eiotas_particle_split_dst(Eiotas_Particle *particle)
     }
 }
 
+EAPI void eiotas_particle_destination_set(Eiotas_Particle *particle, const char *destination)
+{
+    char *dst, *sep;
+
+    dst = (char*)destination;
+    for(; *dst==' '; dst++) /* eat leading spaces */;
+    sep = dst;
+    for(; (*sep && *sep!=' '); sep++) /* search destination end */;
+    add_destination(particle,dst,(sep-dst));
+    particle->cur_dst = eina_array_count_get(particle->dsts)-1;
+}
+
 EAPI void eiotas_particle_destinations_add(Eiotas_Particle *particle, const char* destinations)
 {
     char *dst, *sep;

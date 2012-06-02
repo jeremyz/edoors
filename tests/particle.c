@@ -134,6 +134,17 @@ void test_particle()
     check_str((char*)p2->cur_room,"room/room","room is wrong");
 
     p3 = eiotas_require_particle(dom0);
+    eiotas_particle_destinations_add(p3,"dom0/room0/room1/doorx?get,door?get,dom0/room0/door0?get");
+    eiotas_particle_split_dst(p3);
+    check_str((char*)p3->cur_action,"get","action is wrong");
+    check_str((char*)p3->cur_door,"doorx","door is wrong");
+    check_str((char*)p3->cur_room,"dom0/room0/room1","room is wrong");
+    eiotas_particle_destination_set(p3,"  room/door?got  nothing else matters ");
+    eiotas_particle_split_dst(p3);
+    check_str((char*)p3->cur_action,"got","action is wrong");
+    check_str((char*)p3->cur_door,"door","door is wrong");
+    check_str((char*)p3->cur_room,"room","room is wrong");
+
     p4 = eiotas_require_particle(dom0);
     eiotas_particle_merge(p0,p1);
     eiotas_particle_merge(p0,p2);
