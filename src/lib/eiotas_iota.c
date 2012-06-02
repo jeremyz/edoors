@@ -58,8 +58,8 @@ int eiotas_iota_init(Eiotas_Iota *iota, const char *name, Eiotas_Iota *parent, E
 
 void eiotas_iota_desinit(Eiotas_Iota *iota)
 {
-    eina_stringshare_del(iota->name);
-    eina_stringshare_del(iota->path);
+    STRINGSHARE_FREE(iota->name);
+    STRINGSHARE_FREE(iota->path);
 }
 
 void eiotas_iota_free(Eiotas_Iota *iota)

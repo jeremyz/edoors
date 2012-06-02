@@ -30,14 +30,14 @@ Eiotas_Particle* eiotas_particle_alloc()
     particle->src = NULL;
     particle->dst = NULL;
     particle->dsts = eina_array_new(EIOTAS_PARTICLE_ARRAY_STEP);
-    particle->payload = eina_hash_string_small_new((Eina_Free_Cb)&eina_stringshare_del);
-    particle->merged = NULL;
-    particle->link_fields = eina_array_new(EIOTAS_PARTICLE_ARRAY_STEP);
-    particle->link_value = NULL;
     particle->cur_dst = 0;
     particle->cur_action = NULL;
     particle->cur_door = NULL;
     particle->cur_room = NULL;
+    particle->payload = eina_hash_string_small_new((Eina_Free_Cb)&eina_stringshare_del);
+    particle->merged = NULL;
+    particle->link_fields = eina_array_new(EIOTAS_PARTICLE_ARRAY_STEP);
+    particle->link_value = NULL;
 
     return particle;
 }
@@ -54,14 +54,14 @@ void eiotas_particle_free(Eiotas_Particle *particle)
 
     EINA_ARRAY_ITER_NEXT(particle->dsts, i, s, it) eina_stringshare_del(s);
     eina_array_free(particle->dsts);
+    STRINGSHARE_FREE(particle->cur_action);
+    STRINGSHARE_FREE(particle->cur_door);
+    STRINGSHARE_FREE(particle->cur_room);
     eina_hash_free(particle->payload);
     EINA_INLIST_FOREACH_SAFE(particle->merged, li, p) eiotas_particle_free(p);
     EINA_ARRAY_ITER_NEXT(particle->link_fields, i, s, it) eina_stringshare_del(s);
     eina_array_free(particle->link_fields);
-    if(particle->link_value) eina_stringshare_del(particle->link_value);
-    if(particle->cur_action) eina_stringshare_del(particle->cur_action);
-    if(particle->cur_door) eina_stringshare_del(particle->cur_door);
-    if(particle->cur_room) eina_stringshare_del(particle->cur_room);
+    STRINGSHARE_FREE(particle->link_value);
 
     free(particle);
 }
@@ -79,19 +79,16 @@ EAPI void eiotas_particle_reset(Eiotas_Particle *particle)
     particle->dst = NULL;
     EINA_ARRAY_ITER_NEXT(particle->dsts, i, s, it) eina_stringshare_del(s);
     eina_array_clean(particle->dsts);
+    particle->cur_dst = 0;
+    STRINGSHARE_FREE(particle->cur_action);
+    STRINGSHARE_FREE(particle->cur_door);
+    STRINGSHARE_FREE(particle->cur_room);
     eina_hash_free_buckets(particle->payload);
     EINA_INLIST_FOREACH_SAFE(particle->merged, li, p) eiotas_particle_free(p);
     particle->merged = NULL;
     EINA_ARRAY_ITER_NEXT(particle->link_fields, i, s, it) eina_stringshare_del(s);
     eina_array_clean(particle->link_fields);
-    if(particle->link_value) eina_stringshare_del(particle->link_value);
-    particle->link_value = NULL;
-    if(particle->cur_action) eina_stringshare_del(particle->cur_action);
-    particle->cur_action = NULL;
-    if(particle->cur_door) eina_stringshare_del(particle->cur_door);
-    particle->cur_door = NULL;
-    if(particle->cur_room) eina_stringshare_del(particle->cur_room);
-    particle->cur_room = NULL;
+    STRINGSHARE_FREE(particle->link_value);
 }
 
 EAPI void eiotas_particle_init(Eiotas_Particle *particle, Eiotas_Iota *iota)
@@ -123,10 +120,9 @@ EAPI void eiotas_particle_split_dst(Eiotas_Particle *particle)
     Eina_Stringshare *dst;
 
     if(!eiotas_particle_has_dst(particle)) {
-        if(particle->cur_room) eina_stringshare_del(particle->cur_room);
-        if(particle->cur_door) eina_stringshare_del(particle->cur_door);
-        if(particle->cur_action) eina_stringshare_del(particle->cur_action);
-        particle->cur_room = particle->cur_door = particle->cur_action =  NULL;
+        STRINGSHARE_FREE(particle->cur_action);
+        STRINGSHARE_FREE(particle->cur_door);
+        STRINGSHARE_FREE(particle->cur_room);
         return;
     }
 
@@ -151,10 +147,7 @@ EAPI void eiotas_particle_split_dst(Eiotas_Particle *particle)
         tmp = sep;
         sep = sep-1;
     } else {
-        if(particle->cur_action) {
-            eina_stringshare_del(particle->cur_action);
-            particle->cur_action = NULL;
-        }
+        STRINGSHARE_FREE(particle->cur_action);
         tmp = (char*)dst+l;
         sep = (char*)dst+l-1;
     }
@@ -164,8 +157,7 @@ EAPI void eiotas_particle_split_dst(Eiotas_Particle *particle)
     if(sep==dst) {
         /* no room */
         n=(tmp-sep);
-        if(particle->cur_room) eina_stringshare_del(particle->cur_room);
-        particle->cur_room = NULL;
+        STRINGSHARE_FREE(particle->cur_room);
     } else {
         n=(sep-dst);
         /* door defined */
