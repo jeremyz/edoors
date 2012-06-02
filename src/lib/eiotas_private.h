@@ -56,6 +56,12 @@ int eiotas_iota_init(Eiotas_Iota *iota, const char *name, Eiotas_Iota *parent, E
         return NULL;                        \
     }
 
+#define STRINGSHARE_FREE(_st)           \
+    if(_st) {                           \
+        eina_stringshare_del(_st);      \
+        _st = NULL;                     \
+    }
+
 #define BUILD_INSTANCE(_type,_x)                \
     _type *_x = (_type*)malloc(sizeof(_type));  \
     if(_x==NULL) {                              \
