@@ -129,11 +129,11 @@ EAPI void eiotas_particle_split_dst(Eiotas_Particle *particle)
     dst = eina_array_data_get(particle->dsts,particle->cur_dst);
     l = eina_stringshare_strlen(dst);
 
-    sep = (char*)dst+l-1;
+    sep = (char*)dst+l-sizeof(char);
     for(; (sep!=dst && *sep!=EIOTAS_ACTION_SEP ); sep--) /* reverse search for action separator */;
 
     if(*sep==EIOTAS_ACTION_SEP) {
-        tmp = sep+1;
+        tmp = sep+sizeof(char);
         /* action defined */
         if(particle->cur_action) {
             if(strcmp(particle->cur_action,tmp)!=0) {
@@ -145,11 +145,11 @@ EAPI void eiotas_particle_split_dst(Eiotas_Particle *particle)
             particle->cur_action = eina_stringshare_add(tmp);
         }
         tmp = sep;
-        sep = sep-1;
+        sep = sep-sizeof(char);
     } else {
         STRINGSHARE_FREE(particle->cur_action);
         tmp = (char*)dst+l;
-        sep = (char*)dst+l-1;
+        sep = (char*)dst+l-sizeof(char);
     }
 
     for(; (sep!=dst && *sep!=EIOTAS_PATH_SEP ); sep--) /* reverse search path for separator */;
@@ -170,7 +170,7 @@ EAPI void eiotas_particle_split_dst(Eiotas_Particle *particle)
         } else {
             particle->cur_room = eina_stringshare_add_length(dst,n);
         }
-        n=(tmp-sep-1);
+        n=(tmp-sep-sizeof(char));
         sep++;
     }
     /* door defined */
@@ -233,7 +233,7 @@ static char* add_destination(Eiotas_Particle *particle, const char *dst)
                 ERR("ignore destination with more then 1 '%c' ",EIOTAS_ACTION_SEP);
                 return end;
             }
-            if(last_path_sep==(end-1)) {
+            if(last_path_sep==(end-sizeof(char))) {
                 ERR("ignore destination with '%c%c' ",EIOTAS_PATH_SEP,EIOTAS_ACTION_SEP);
                 return end;
             }
@@ -241,8 +241,8 @@ static char* add_destination(Eiotas_Particle *particle, const char *dst)
         }
     }
 
-    if(last_path_sep==(end-1) || action_sep==(end-1) ) {
-        ERR("ignore destination ending with '%c' ",*(end-1));
+    if(last_path_sep==(end-sizeof(char)) || action_sep==(end-sizeof(char)) ) {
+        ERR("ignore destination ending with '%c' ",*(end-sizeof(char)));
         return end;
     }
 
@@ -279,7 +279,7 @@ EAPI void eiotas_particle_link_fields_set(Eiotas_Particle *particle, const char 
         }
         for(; (*sep && *sep!=EIOTAS_FIELDS_SEP); sep++) /* eat whatever following */;
         if(!*sep) return;
-        field = sep+1;
+        field = sep+sizeof(char);
     }
     update_link_value(particle,NULL);
 }

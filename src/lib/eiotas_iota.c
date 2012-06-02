@@ -45,7 +45,7 @@ int eiotas_iota_init(Eiotas_Iota *iota, const char *name, Eiotas_Iota *parent, E
         }
         memcpy(tmp,parent->path,lp);
         tmp[lp]='/';
-        memcpy((tmp+lp+1),name,ln+1);
+        memcpy((tmp+lp+sizeof(char)),name,ln+sizeof(char));
         iota->name = eina_stringshare_add(name);
         iota->path = eina_stringshare_add(tmp);
     } else {
