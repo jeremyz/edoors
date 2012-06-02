@@ -162,7 +162,7 @@ EAPI void eiotas_particle_split_dst(Eiotas_Particle *particle)
         n=(sep-dst);
         /* door defined */
         if(particle->cur_room) {
-            if(strncmp(particle->cur_room,dst,n)!=0) {
+            if( eina_stringshare_strlen(particle->cur_room)!=n || strncmp(particle->cur_room,dst,n)!=0) {
                 eina_stringshare_del(particle->cur_room);
                 particle->cur_room = eina_stringshare_add_length(dst,n);
             }
@@ -175,7 +175,7 @@ EAPI void eiotas_particle_split_dst(Eiotas_Particle *particle)
     }
     /* door defined */
     if(particle->cur_door) {
-        if(strncmp(particle->cur_door,sep,n)!=0) {
+        if( eina_stringshare_strlen(particle->cur_door)!=n || strncmp(particle->cur_door,sep,n)!=0) {
             eina_stringshare_del(particle->cur_door);
             particle->cur_door = eina_stringshare_add_length(sep,n);
         }
