@@ -20,7 +20,7 @@
 #include "eiotas_private.h"
 
 static void update_link_value(Eiotas_Particle *particle, const char *field);
-static Eina_Bool add_destination(Eiotas_Particle *particle, const char *dst, int l);
+static char* add_destination(Eiotas_Particle *particle, const char *dst);
 
 Eiotas_Particle* eiotas_particle_alloc()
 {
@@ -187,70 +187,70 @@ EAPI void eiotas_particle_split_dst(Eiotas_Particle *particle)
 
 EAPI void eiotas_particle_destination_set(Eiotas_Particle *particle, const char *destination)
 {
-    char *dst, *sep;
+    char *tmp;
 
-    dst = (char*)destination;
-    for(; *dst==' '; dst++) /* eat leading spaces */;
-    sep = dst;
-    for(; (*sep && *sep!=' '); sep++) /* search destination end */;
-    add_destination(particle,dst,(sep-dst));
-    particle->cur_dst = eina_array_count_get(particle->dsts)-1;
+    tmp = add_destination(particle,destination);
+    if(*tmp=='\0' || *tmp==' ' || *tmp==EIOTAS_FIELDS_SEP)
+        particle->cur_dst = eina_array_count_get(particle->dsts)-1;
 }
 
 EAPI void eiotas_particle_destinations_add(Eiotas_Particle *particle, const char* destinations)
 {
-    char *dst, *sep;
+    char *dst;
 
     dst = (char*)destinations;
-    for(; *dst;) {
-        for(; *dst==' '; dst++) /* eat leading spaces */;
-        sep = dst;
-        for(; (*sep && *sep!=EIOTAS_FIELDS_SEP && *sep!=' '); sep++) /* search destination end */;
-        add_destination(particle,dst,(sep-dst));
-        for(; (*sep && *sep!=EIOTAS_FIELDS_SEP); sep++) /* eat whatever following */;
-        if(!*sep) return;
-        dst = sep+1;
+    for(;;) {
+        dst = add_destination(particle,dst);
+        for(; (*dst && *dst!=EIOTAS_FIELDS_SEP); dst++) /* eat whatever is following */;
+        if(!*dst) return;
+        dst++;
     }
 }
 
-static Eina_Bool add_destination(Eiotas_Particle *particle, const char *dst, int n)
+static char* add_destination(Eiotas_Particle *particle, const char *dst)
 {
-    int i, c;
-    char *tmp;
+    char *start, *end, *last_path_sep, *action_sep;
     Eina_Stringshare *s;
 
-    if(n==0) {
+    for(start=(char*)dst; *start && *start==' '; start++) /* eat leading spaces */;
+
+    if(*start=='\0' || *start==EIOTAS_FIELDS_SEP) {
         ERR("ignore empty destination");
-        return EINA_FALSE;
-    }
-    if(*dst==EIOTAS_ACTION_SEP || *dst==EIOTAS_PATH_SEP ) {
-        ERR("ignore destination starting with '%c' ",*dst);
-        return EINA_FALSE;
-    }
-    if(dst[n-1]==EIOTAS_ACTION_SEP || dst[n-1]==EIOTAS_PATH_SEP ) {
-        ERR("ignore destination ending with '%c' ",dst[n-1]);
-        return EINA_FALSE;
+        return start;
     }
 
-    for(tmp=(char*)dst, c=0, i=0; i<n; i++, tmp++) {
-        if(*tmp==EIOTAS_ACTION_SEP) {
-            if(*(tmp-1)==EIOTAS_PATH_SEP) {
-                ERR("ignore destination with '%c%c' ",EIOTAS_PATH_SEP,EIOTAS_ACTION_SEP);
-                return EINA_FALSE;
+    if(*start==EIOTAS_ACTION_SEP || *start==EIOTAS_PATH_SEP ) {
+        ERR("ignore destination starting with '%c' ",*start);
+        return start;
+    }
+
+    last_path_sep = action_sep = NULL;
+    for(end=start; (*end && *end!=EIOTAS_FIELDS_SEP && *end!=' '); end++) {
+        if(*end==EIOTAS_PATH_SEP) {
+            last_path_sep = end;
+        } else if(*end==EIOTAS_ACTION_SEP) {
+            if(action_sep) {
+                ERR("ignore destination with more then 1 '%c' ",EIOTAS_ACTION_SEP);
+                return end;
             }
-            c++;
+            if(last_path_sep==(end-1)) {
+                ERR("ignore destination with '%c%c' ",EIOTAS_PATH_SEP,EIOTAS_ACTION_SEP);
+                return end;
+            }
+            action_sep = end;
         }
     }
-    if(c>1) {
-        ERR("ignore destination with more then 1 '%c' ",EIOTAS_ACTION_SEP);
-        return EINA_FALSE;
+
+    if(last_path_sep==(end-1) || action_sep==(end-1) ) {
+        ERR("ignore destination ending with '%c' ",*(end-1));
+        return end;
     }
 
-    s = eina_stringshare_add_length(dst,n);
+    s = eina_stringshare_add_length(start,(end-start));
     eina_array_push(particle->dsts,s);
     DBG("add dst >%s<",s);
 
-    return EINA_TRUE;
+    return end;
 }
 
 EAPI void eiotas_particle_link_fields_set(Eiotas_Particle *particle, const char *link_fields)
