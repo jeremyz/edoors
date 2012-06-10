@@ -1,4 +1,4 @@
-/* EIOTAS
+/* EDOORS
  * Copyright (C) 2012 Jérémy Zurcher
  *
  * This library is free software; you can redistribute it and/or
@@ -16,17 +16,17 @@
  * if not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "eiotas_iota.h"
-#include "eiotas_spin.h"
-#include "eiotas_room.h"
-#include "eiotas_door.h"
-#include "eiotas_board.h"
-#include "eiotas_private.h"
+#include "edoors_iota.h"
+#include "edoors_spin.h"
+#include "edoors_room.h"
+#include "edoors_door.h"
+#include "edoors_board.h"
+#include "edoors_private.h"
 
-int eiotas_iota_init(Eiotas_Iota *iota, const char *name, Eiotas_Iota *parent, Eiotas_Type type)
+int edoors_iota_init(Edoors_Iota *iota, const char *name, Edoors_Iota *parent, Edoors_Type type)
 {
     int ln, lp;
-    char tmp[EIOTAS_MAX_PATH_LENGTH];
+    char tmp[EDOORS_MAX_PATH_LENGTH];
 
     ln = strlen(name);
     if(name==NULL || ln==0) {
@@ -39,7 +39,7 @@ int eiotas_iota_init(Eiotas_Iota *iota, const char *name, Eiotas_Iota *parent, E
     iota->parent = parent;
     if(parent) {
         lp = eina_stringshare_strlen(parent->path);
-        if((ln+lp+2)>EIOTAS_MAX_PATH_LENGTH) {
+        if((ln+lp+2)>EDOORS_MAX_PATH_LENGTH) {
             ERR("buffer overflow (%d)",(ln+lp+2));
             return 1;
         }
@@ -56,26 +56,26 @@ int eiotas_iota_init(Eiotas_Iota *iota, const char *name, Eiotas_Iota *parent, E
     return 0;
 }
 
-void eiotas_iota_desinit(Eiotas_Iota *iota)
+void edoors_iota_desinit(Edoors_Iota *iota)
 {
     STRINGSHARE_FREE(iota->name);
     STRINGSHARE_FREE(iota->path);
 }
 
-void eiotas_iota_free(Eiotas_Iota *iota)
+void edoors_iota_free(Edoors_Iota *iota)
 {
     switch(iota->type) {
-        case EIOTAS_TYPE_SPIN:
-            eiotas_spin_free((Eiotas_Spin*)iota);
+        case EDOORS_TYPE_SPIN:
+            edoors_spin_free((Edoors_Spin*)iota);
             break;
-        case EIOTAS_TYPE_ROOM:
-            eiotas_room_free((Eiotas_Room*)iota);
+        case EDOORS_TYPE_ROOM:
+            edoors_room_free((Edoors_Room*)iota);
             break;
-        case EIOTAS_TYPE_DOOR:
-            eiotas_door_free((Eiotas_Door*)iota);
+        case EDOORS_TYPE_DOOR:
+            edoors_door_free((Edoors_Door*)iota);
             break;
-        case EIOTAS_TYPE_BOARD:
-            eiotas_board_free((Eiotas_Board*)iota);
+        case EDOORS_TYPE_BOARD:
+            edoors_board_free((Edoors_Board*)iota);
             break;
         default:
             CRITICAL("SPANK SPANK: 0x%X type %d is unknown, memory leak",PRINTPTR(iota),iota->type);
@@ -83,7 +83,7 @@ void eiotas_iota_free(Eiotas_Iota *iota)
     }
 }
 
-EAPI void eiotas_iota_show(Eiotas_Iota *iota)
+EAPI void edoors_iota_show(Edoors_Iota *iota)
 {
     DBG("Iota(%d) 0x%X : %s (%s) [0x%X] {0x%X}",iota->type,PRINTPTR(iota),iota->name,iota->path,
             PRINTPTR(iota->parent),PRINTPTR(iota->spin));

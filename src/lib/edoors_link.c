@@ -1,4 +1,4 @@
-/* EIOTAS
+/* EDOORS
  * Copyright (C) 2012 Jérémy Zurcher
  *
  * This library is free software; you can redistribute it and/or
@@ -16,10 +16,10 @@
  * if not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "eiotas_link.h"
-#include "eiotas_private.h"
+#include "edoors_link.h"
+#include "edoors_private.h"
 
-void eiotas_link_free(Eiotas_Link *link)
+void edoors_link_free(Edoors_Link *link)
 {
     DBG("Link free 0x%X",PRINTPTR(link));
     // TODO

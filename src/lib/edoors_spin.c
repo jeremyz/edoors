@@ -1,4 +1,4 @@
-/* EIOTAS
+/* EDOORS
  * Copyright (C) 2012 Jérémy Zurcher
  *
  * This library is free software; you can redistribute it and/or
@@ -16,19 +16,19 @@
  * if not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "eiotas_spin.h"
-#include "eiotas_iota.h"
-#include "eiotas_particle.h"
-#include "eiotas_private.h"
+#include "edoors_spin.h"
+#include "edoors_iota.h"
+#include "edoors_particle.h"
+#include "edoors_private.h"
 
-EAPI Eiotas_Spin* eiotas_spin_add(const char* name, unsigned int step)
+EAPI Edoors_Spin* edoors_spin_add(const char* name, unsigned int step)
 {
-    BUILD_INSTANCE(Eiotas_Spin,spin);
+    BUILD_INSTANCE(Edoors_Spin,spin);
 
-    INIT_IOTA(&spin->room.iota,name,NULL,EIOTAS_TYPE_SPIN);
+    INIT_IOTA(&spin->room.iota,name,NULL,EDOORS_TYPE_SPIN);
 
     spin->room.links = NULL;    /* not used */
-    spin->room.children = eina_hash_stringshared_new((Eina_Free_Cb)&eiotas_iota_free);
+    spin->room.children = eina_hash_stringshared_new((Eina_Free_Cb)&edoors_iota_free);
     spin->free_particles = eina_array_new(step);
     spin->sys_fifo = NULL;
     spin->app_fifo = NULL;
@@ -36,56 +36,56 @@ EAPI Eiotas_Spin* eiotas_spin_add(const char* name, unsigned int step)
     return spin;
 }
 
-EAPI void eiotas_spin_free(Eiotas_Spin *spin)
+EAPI void edoors_spin_free(Edoors_Spin *spin)
 {
     unsigned int        i;
-    Eiotas_Particle     *particle;
+    Edoors_Particle     *particle;
     Eina_Array_Iterator iterator;
     Eina_Inlist         *list;
 
     DBG("Spin free 0x%X",PRINTPTR(spin));
 
-    eiotas_iota_desinit(&spin->room.iota);
+    edoors_iota_desinit(&spin->room.iota);
     eina_hash_free(spin->room.children);
-    EINA_ARRAY_ITER_NEXT(spin->free_particles, i, particle, iterator) eiotas_particle_free(particle);
+    EINA_ARRAY_ITER_NEXT(spin->free_particles, i, particle, iterator) edoors_particle_free(particle);
     eina_array_free(spin->free_particles);
-    EINA_INLIST_FOREACH_SAFE(spin->sys_fifo, list,particle) eiotas_particle_free(particle);
-    EINA_INLIST_FOREACH_SAFE(spin->app_fifo, list,particle) eiotas_particle_free(particle);
+    EINA_INLIST_FOREACH_SAFE(spin->sys_fifo, list,particle) edoors_particle_free(particle);
+    EINA_INLIST_FOREACH_SAFE(spin->app_fifo, list,particle) edoors_particle_free(particle);
 
     free(spin);
 }
 
-EAPI Eiotas_Particle* eiotas_spin_require_particle(Eiotas_Spin *spin)
+EAPI Edoors_Particle* edoors_spin_require_particle(Edoors_Spin *spin)
 {
-    Eiotas_Particle *particle;
+    Edoors_Particle *particle;
     if(eina_array_count(spin->free_particles)>0) {
         particle = eina_array_pop(spin->free_particles);
     } else {
-        particle = (Eiotas_Particle*)eiotas_particle_alloc();
+        particle = (Edoors_Particle*)edoors_particle_alloc();
     }
     return particle;
 }
 
-EAPI void eiotas_spin_release_particle(Eiotas_Spin *spin, Eiotas_Particle *particle)
+EAPI void edoors_spin_release_particle(Edoors_Spin *spin, Edoors_Particle *particle)
 {
-    Eiotas_Particle     *p;
+    Edoors_Particle     *p;
     Eina_Inlist         *list;
 
     while (particle->merged) {
-        p = EINA_INLIST_CONTAINER_GET(particle->merged,Eiotas_Particle);
+        p = EINA_INLIST_CONTAINER_GET(particle->merged,Edoors_Particle);
         particle->merged = eina_inlist_remove(particle->merged,particle->merged);
-        eiotas_spin_release_particle(spin,p);
+        edoors_spin_release_particle(spin,p);
     }
-    eiotas_particle_reset(particle);
+    edoors_particle_reset(particle);
     eina_array_push(spin->free_particles,particle);
 }
 
-EAPI void eiotas_spin_send_particle(Eiotas_Spin *spin, const Eiotas_Particle *particle, Eina_Bool system)
+EAPI void edoors_spin_send_particle(Edoors_Spin *spin, const Edoors_Particle *particle, Eina_Bool system)
 {
     if(system) {
-        spin->sys_fifo = eina_inlist_append(spin->sys_fifo,EINA_INLIST_GET((Eiotas_Particle*)particle));
+        spin->sys_fifo = eina_inlist_append(spin->sys_fifo,EINA_INLIST_GET((Edoors_Particle*)particle));
     } else {
-        spin->app_fifo = eina_inlist_append(spin->app_fifo,EINA_INLIST_GET((Eiotas_Particle*)particle));
+        spin->app_fifo = eina_inlist_append(spin->app_fifo,EINA_INLIST_GET((Edoors_Particle*)particle));
     }
 }
 

@@ -1,4 +1,4 @@
-/* EIOTAS
+/* EDOORS
  * Copyright (C) 2012 Jérémy Zurcher
  *
  * This library is free software; you can redistribute it and/or
@@ -16,37 +16,37 @@
  * if not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __EIOTAS_BOARD_H__
-#define __EIOTAS_BOARD_H__
+#ifndef __EDOORS_BOARD_H__
+#define __EDOORS_BOARD_H__
 
-#include "eiotas_iota.h"
-#include "eiotas_room.h"
-#include "eiotas_userbits.h"
+#include "edoors_iota.h"
+#include "edoors_room.h"
+#include "edoors_userbits.h"
 
 #include <eina_hash.h>
 
 /**
- * @typedef Eiotas_Board
+ * @typedef Edoors_Board
  * Type for a Particle Merging Door.
  */
-typedef struct _Eiotas_Board Eiotas_Board;
+typedef struct _Edoors_Board Edoors_Board;
 
 /**
- * @struct _Eiotas_Board
+ * @struct _Edoors_Board
  * Struct for a Particle Merging Door.
  */
-struct _Eiotas_Board {
-    Eiotas_Iota         iota;           /**< structural info */
-    Eiotas_User_Bits    user_bits;      /**< user bits */
+struct _Edoors_Board {
+    Edoors_Iota         iota;           /**< structural info */
+    Edoors_User_Bits    user_bits;      /**< user bits */
     Eina_Hash           *postponed;     /**< TODO Particles */
 };
 
 /**
- * @defgroup Eiotas_Board Eiotas_Board
+ * @defgroup Edoors_Board Edoors_Board
  *
- * A Eiota_Board holds @ref Eiotas_Particle received.
- * When two @ref Eiotas_Particle with the same link_value exists, they are merged together
- * and delivered to user code through Eiotas_Receive_Particle callback.
+ * A Edoors_Board holds @ref Edoors_Particle received.
+ * When two @ref Edoors_Particle with the same link_value exists, they are merged together
+ * and delivered to user code through Edoors_Receive_Particle callback.
  *
  * @{
  */
@@ -54,27 +54,27 @@ struct _Eiotas_Board {
 /**
  * @brief Free allocated resources.
  *
- * @param board The @ref Eiotas_Board to free.
+ * @param board The @ref Edoors_Board to free.
  *
  * This function will free all it's user data using user_bits ... FIXME
  */
-void eiotas_board_free(Eiotas_Board *board);
+void edoors_board_free(Edoors_Board *board);
 
 /**
  * @brief Allocate the resources.
  *
  * @param name The name of this door.
- * @param parent The direct hierarchical parent @ref Eiotas_Room.
- * @param user_bits A Eiotas_User_Bits initilized with user side pointers.
+ * @param parent The direct hierarchical parent @ref Edoors_Room.
+ * @param user_bits A Edoors_User_Bits initilized with user side pointers.
  *
- * @return the new allocated @ref Eiotas_Board @c NULL on failure
+ * @return the new allocated @ref Edoors_Board @c NULL on failure
  *
- * @see Eiotas_User_Bits
+ * @see Edoors_User_Bits
  */
-EAPI Eiotas_Board*  eiotas_board_add(const char* name, const Eiotas_Room *parent, Eiotas_User_Bits *user_bits);
+EAPI Edoors_Board*  edoors_board_add(const char* name, const Edoors_Room *parent, Edoors_User_Bits *user_bits);
 
 /**
  * @}
  */
 
-#endif // __EIOTAS_BOARD_H__
+#endif // __EDOORS_BOARD_H__

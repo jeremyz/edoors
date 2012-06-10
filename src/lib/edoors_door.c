@@ -1,4 +1,4 @@
-/* EIOTAS
+/* EDOORS
  * Copyright (C) 2012 Jérémy Zurcher
  *
  * This library is free software; you can redistribute it and/or
@@ -16,27 +16,33 @@
  * if not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __EIOTAS_H__
-#define __EIOTAS_H__
+#include "edoors_door.h"
+#include "edoors_private.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+EAPI Edoors_Door* edoors_door_add(const char* name, const Edoors_Room *parent, Edoors_User_Bits *user_bits)
+{
+    CHECK_PARENT();
 
-#include "eiotas_main.h"
+    CHECK_USERBITS(user_bits);
 
-#include "eiotas_particle.h"
-#include "eiotas_iota.h"
-#include "eiotas_link.h"
-#include "eiotas_room.h"
-#include "eiotas_door.h"
-#include "eiotas_board.h"
-#include "eiotas_spin.h"
+    BUILD_INSTANCE(Edoors_Door,door);
 
-#include "eiotas_userbits.h"
+    INIT_IOTA(&door->iota,name,parent,EDOORS_TYPE_DOOR);
 
-#ifdef __cplusplus
+    ADD_TO_PARENT(parent,(&door->iota),"Door")
+
+    memcpy(&door->user_bits,user_bits,sizeof(Edoors_User_Bits));
+
+    return door;
 }
-#endif
 
-#endif // __EIOTAS_H__
+void edoors_door_free(Edoors_Door *door)
+{
+    DBG("Door free 0x%X",PRINTPTR(door));
+
+    edoors_iota_desinit(&door->iota);
+    door->user_bits.free_fct(door->user_bits.data);
+
+    free(door);
+}
+

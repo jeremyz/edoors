@@ -6,7 +6,7 @@ CMAKE_OPTIONS="
     -DWANT_DEBUG=1 \
 "
 MAKE_OPTS="-j 3"
-BUILD_DIR=./eiotas-build
+BUILD_DIR=./edoors-build
 
 [ -f cmake_opts ] && source cmake_opts
 

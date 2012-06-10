@@ -1,4 +1,4 @@
-/* EIOTAS
+/* EDOORS
  * Copyright (C) 2012 Jérémy Zurcher
  *
  * This library is free software; you can redistribute it and/or
@@ -16,43 +16,43 @@
  * if not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "eiotas_main.h"
-#include "eiotas_private.h"
+#include "edoors_main.h"
+#include "edoors_private.h"
 
 #include "eina_main.h"
 #include <stdio.h>
 
-static int _eiotas_main_count = 0;
+static int _edoors_main_count = 0;
 
-int _eiotas_log_dom;
+int _edoors_log_dom;
 
-static Eiotas_Version _version = { VMAJ, VMIN, VMIC };
+static Edoors_Version _version = { VMAJ, VMIN, VMIC };
 
-EAPI Eiotas_Version *eiotas_version = &_version;
+EAPI Edoors_Version *edoors_version = &_version;
 
-EAPI int eiotas_init()
+EAPI int edoors_init()
 {
-    if (EINA_LIKELY(_eiotas_main_count > 0))
-      return ++_eiotas_main_count;
+    if (EINA_LIKELY(_edoors_main_count > 0))
+      return ++_edoors_main_count;
 
     if(!eina_init()) {
         fprintf(stderr,"Error during the initialization of Eina_Log module\n");
         return EXIT_FAILURE;
     }
 
-    _eiotas_log_dom = eina_log_domain_register("eiotas", EINA_COLOR_CYAN);
-    _eiotas_main_count = 1;
+    _edoors_log_dom = eina_log_domain_register("edoors", EINA_COLOR_CYAN);
+    _edoors_main_count = 1;
 
     return 1;
 }
 
-EAPI int eiotas_shutdown()
+EAPI int edoors_shutdown()
 {
-   _eiotas_main_count--;
-   if (EINA_UNLIKELY(_eiotas_main_count == 0)) {
+   _edoors_main_count--;
+   if (EINA_UNLIKELY(_edoors_main_count == 0)) {
        eina_shutdown();
    }
 
-   return _eiotas_main_count;
+   return _edoors_main_count;
 }
 

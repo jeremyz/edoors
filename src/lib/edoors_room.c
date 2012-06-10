@@ -1,4 +1,4 @@
-/* EIOTAS
+/* EDOORS
  * Copyright (C) 2012 Jérémy Zurcher
  *
  * This library is free software; you can redistribute it and/or
@@ -16,39 +16,33 @@
  * if not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __EIOTAS_LINK_H__
-#define __EIOTAS_LINK_H__
+#include "edoors_room.h"
+#include "edoors_private.h"
 
-/**
- * @typedef Eiotas_Link
- * Type for a Link between @ref Eiotas_Iota.
- */
-typedef struct _Eiotas_Link Eiotas_Link;
+EAPI Edoors_Room* edoors_room_add(const char* name, const Edoors_Room *parent)
+{
+    CHECK_PARENT();
 
-/**
- * @struct _Eiotas_Link
- * Struct for a Link between @ref Eiotas_Iota.
- */
-struct _Eiotas_Link {
-};
+    BUILD_INSTANCE(Edoors_Room,room);
 
-/**
- * @defgroup Eiotas_Link Eiotas_Link
- *
- * A Eiota_Link allows to apply a destination list to a @ref Eiotas_Particle with no defined destination.
- *
- * @{
- */
+    INIT_IOTA(&room->iota,name,parent,EDOORS_TYPE_ROOM);
 
-/**
- * @brief Free allocated resources.
- *
- * @param link The @ref Eiotas_Link to free.
- */
-void eiotas_link_free(Eiotas_Link *link);
+    ADD_TO_PARENT(parent,(&room->iota),"Room")
 
-/**
- * @}
- */
+    room->links = NULL;    // TODO
+    room->children = eina_hash_stringshared_new((Eina_Free_Cb)&edoors_iota_free);
 
-#endif // __EIOTAS_LINK_H__
+    return room;
+}
+
+void edoors_room_free(Edoors_Room *room)
+{
+    DBG("Room free 0x%X",PRINTPTR(room));
+
+    edoors_iota_desinit(&room->iota);
+    // TODO room->links
+    eina_hash_free(room->children);
+
+    free(room);
+}
+

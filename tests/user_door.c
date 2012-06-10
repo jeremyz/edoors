@@ -19,37 +19,37 @@ static Input* input_create(char *txt)
 
 static void input_free(Input *input)
 {
-    EINA_LOG_DOM_DBG(_eiotas_log_dom,"free Input\n");
+    EINA_LOG_DOM_DBG(_edoors_log_dom,"free Input\n");
     free(input);
     free_called = 1;
 }
 
 static void input_show(Input *input)
 {
-    EINA_LOG_DOM_DBG(_eiotas_log_dom,"Input [%d] %s\n",input->idx,input->txt);
+    EINA_LOG_DOM_DBG(_edoors_log_dom,"Input [%d] %s\n",input->idx,input->txt);
 }
 
-static void input_receive(const Eiotas_Door *door, Eiotas_Particle *particle, Eiotas_User_Data *data)
+static void input_receive(const Edoors_Door *door, Edoors_Particle *particle, Edoors_User_Data *data)
 {
-    EINA_LOG_DOM_DBG(_eiotas_log_dom,"input_receive 0x%X\n",PRINTPTR(data));
+    EINA_LOG_DOM_DBG(_edoors_log_dom,"input_receive 0x%X\n",PRINTPTR(data));
 }
 
 void test_user_door()
 {
-    Eiotas_Spin *dom0 = eiotas_spin_add("dom0",10);
+    Edoors_Spin *dom0 = edoors_spin_add("dom0",10);
 
     Input *input = input_create("hello world");
     input_show(input);
 
-    Eiotas_User_Bits user_bits;
+    Edoors_User_Bits user_bits;
 
     user_bits.data = input;
-    user_bits.free_fct = (Eiotas_User_Data_Free)&input_free;
-    user_bits.recv_fct = (Eiotas_Receive_Particle)&input_receive;
-    Eiotas_Door *din0 = eiotas_door_add("input0",&dom0->room,&user_bits);
-    eiotas_iota_show(&din0->iota); // eiotas_iota_show((Eiotas_Iota*)din0);
+    user_bits.free_fct = (Edoors_User_Data_Free)&input_free;
+    user_bits.recv_fct = (Edoors_Receive_Particle)&input_receive;
+    Edoors_Door *din0 = edoors_door_add("input0",&dom0->room,&user_bits);
+    edoors_iota_show(&din0->iota); // edoors_iota_show((Edoors_Iota*)din0);
 
-    eiotas_spin_free(dom0);
+    edoors_spin_free(dom0);
     check_cond((free_called==1),"input_free not called");
 }
 

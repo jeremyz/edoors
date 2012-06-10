@@ -1,4 +1,4 @@
-/* EIOTAS
+/* EDOORS
  * Copyright (C) 2012 Jérémy Zurcher
  *
  * This library is free software; you can redistribute it and/or
@@ -16,71 +16,71 @@
  * if not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __EIOTAS_MAIN_H__
-#define __EIOTAS_MAIN_H__
+#ifndef __EDOORS_MAIN_H__
+#define __EDOORS_MAIN_H__
 
 #include <eina_types.h>
 
 /**
- * @typedef Eiotas_Version
- * Type for the version of Eiotas.
+ * @typedef Edoors_Version
+ * Type for the version of Edoors.
  */
-typedef struct _Eiotas_Version Eiotas_Version;
+typedef struct _Edoors_Version Edoors_Version;
 
 /**
- * @struct _Eiotas_Version
- * Struct version of Eiotas.
+ * @struct _Edoors_Version
+ * Struct version of Edoors.
  */
-struct _Eiotas_Version
+struct _Edoors_Version
 {
    int major;    /**< Major component of the version */
    int minor;    /**< Minor component of the version */
    int micro;    /**< Micro component of the version */
 };
 
-EAPI extern Eiotas_Version *eiotas_version;
+EAPI extern Edoors_Version *edoors_version;
 
-EAPI extern int _eiotas_log_dom;
+EAPI extern int _edoors_log_dom;
 
 /**
- * @defgroup Eiotas_Main Eiotas
+ * @defgroup Edoors_Main Edoors
  *
  * @{
  */
 
 /**
- * @brief Initialize the Eiotas library.
+ * @brief Initialize the Edoors library.
  *
  * @return 1 or greater on success, 0 on error.
  *
- * This function sets up all the eiotas modules. It returns 0 on
+ * This function sets up all the edoors modules. It returns 0 on
  * failure (that is, when one of the module fails to initialize),
  * otherwise it returns the number of times it has already been
  * called.
  *
- * When Eiotas is not used anymore, call eiotas_shutdown() to shut down
- * the Eiotaslibrary.
+ * When Edoors is not used anymore, call edoors_shutdown() to shut down
+ * the Edoorslibrary.
  */
-EAPI int eiotas_init();
+EAPI int edoors_init();
 
 /**
- * @brief Shut down the Eiotas library.
+ * @brief Shut down the Edoors library.
  *
  * @return 0 when all the modules are completely shut down, 1 or
  * greater otherwise.
  *
- * This function shuts down the Eiotas library. It returns 0 when it has
- * been called the same number of times than eiotas_init(). In that case
- * it shut down all the Eiotas modules.
+ * This function shuts down the Edoors library. It returns 0 when it has
+ * been called the same number of times than edoors_init(). In that case
+ * it shut down all the Edoors modules.
  *
  * Once this function succeeds (that is, @c 0 is returned), you must
- * not call any of the Eiotas function anymore. You must call
- * eiotas_init() again to use the Eiotas functions again.
+ * not call any of the Edoors function anymore. You must call
+ * edoors_init() again to use the Edoors functions again.
  */
-EAPI int eiotas_shutdown();
+EAPI int edoors_shutdown();
 
 /**
  * @}
  */
 
-#endif // __EIOTAS_MAIN_H__
+#endif // __EDOORS_MAIN_H__
