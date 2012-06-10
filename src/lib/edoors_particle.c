@@ -136,9 +136,9 @@ EAPI void edoors_particle_split_dst(Edoors_Particle *particle)
         tmp = sep+sizeof(char);
         /* action defined */
         if(particle->cur_action) {
-            if(strcmp(particle->cur_action,tmp)!=0) {
-                eina_stringshare_del(particle->cur_action);
-                particle->cur_action = eina_stringshare_add(tmp);
+            n = strlen(tmp);
+            if( eina_stringshare_strlen(particle->cur_action)!=n || strncmp(particle->cur_action,tmp,n)!=0) {
+                eina_stringshare_replace(&particle->cur_action,tmp);
             }
             /* else : keep the same stringshare */
         } else {
