@@ -137,7 +137,7 @@ EAPI void edoors_particle_split_dst(Edoors_Particle *particle)
         /* action defined */
         if(particle->cur_action) {
             n = strlen(tmp);
-            if( eina_stringshare_strlen(particle->cur_action)!=n || strncmp(particle->cur_action,tmp,n)!=0) {
+            if( eina_stringshare_strlen(particle->cur_action)!=n || strcmp(particle->cur_action,tmp)!=0) {
                 eina_stringshare_replace(&particle->cur_action,tmp);
             }
             /* else : keep the same stringshare */
@@ -162,7 +162,7 @@ EAPI void edoors_particle_split_dst(Edoors_Particle *particle)
         n=(sep-dst);
         /* door defined */
         if(particle->cur_room) {
-            if( eina_stringshare_strlen(particle->cur_room)!=n || strncmp(particle->cur_room,dst,n)!=0) {
+            if( eina_stringshare_strlen(particle->cur_room)!=n || strcmp(particle->cur_room,dst)!=0) {
                 eina_stringshare_del(particle->cur_room);
                 particle->cur_room = eina_stringshare_add_length(dst,n);
             }
@@ -175,7 +175,7 @@ EAPI void edoors_particle_split_dst(Edoors_Particle *particle)
     }
     /* door defined */
     if(particle->cur_door) {
-        if( eina_stringshare_strlen(particle->cur_door)!=n || strncmp(particle->cur_door,sep,n)!=0) {
+        if( eina_stringshare_strlen(particle->cur_door)!=n || strcmp(particle->cur_door,sep)!=0) {
             eina_stringshare_del(particle->cur_door);
             particle->cur_door = eina_stringshare_add_length(sep,n);
         }
